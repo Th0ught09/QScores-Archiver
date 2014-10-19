@@ -1,0 +1,251 @@
+<html>
+<head>
+  <title>QScores-Archiver</title>
+</head>
+<body>  
+
+<h1>QScores-Archiver</h1>
+
+
+<h3>Table of Contents</h3>
+<ol>
+  <li><a href=README.html#introduction>Introduction</a></li>
+  <li><a href=README.html#require>Requirements</a></li>
+  <li><a href=README.html#compiling>Compiling</a></li>
+  <li><a href=README.html#doxygen>Software Documentation</a></li>
+  <li><a href=README.html#structure>Files and Directories</a></li>
+  <li><a href=README.html#running>Running QScores-Archiver</a></li>
+  <li><a href=README.html#future>Future Work</a></li>
+  <li><a href=README.html#about>About QScores-Archiver</a></li>
+  <li><a href=README.html#copyright>Copyright and License</a></li>
+</ol>
+
+
+<h2 id="introduction">Introduction</h2>
+
+<p>QScores-Archiver is a system for archiving quality scores in FASTQ formatted next generation sequencing data.  To achieve this, it employs lossy and lossless transformations coupled with compression.  It is implemented as a command-line tool, but has been developed so that users can link this software with their own source code.  This document accompanies the archive, which also includes:</p>
+
+<ul>
+<li>source code in C++,</li>
+<li>other important documentation and license information, and</li>
+<li>a very small data file for testing.</li>
+</ul>
+
+<p>This archive does not include any binaries.  This program is described in the paper:</p>
+
+<blockquote>R. Wan, V. N. Anh, and K. Asai.  Transformations for the Compression of FASTQ Quality Scores of Next Generation Sequencing Data. <em>Submitted for peer-review</em>, 2011.</blockquote>
+
+<p>which we refer to as "the paper" throughout this document.</p>
+
+
+
+<h2 id="require">Requirements</h2>
+
+<table cellpadding="0" cellspacing="3" border="1" align="center">
+<tr>
+  <th>Software</th><th>Version</th><th>Required?</th><th>Web site</th>
+</tr>
+<tr>
+  <td>g++</td><td>4.1.2</td><td>Yes</td><td><a href="http://gcc.gnu.org/">http://gcc.gnu.org/</a></td>
+</tr>
+<tr>
+  <td>CMake</td><td>2.8.2</td><td>Yes</td><td><a href="http://www.cmake.org/">http://www.cmake.org/</a></td>
+</tr>
+<tr>
+  <td>Boost library</td><td>1.46.0</td><td>Yes</td><td><a href="http://www.boost.org/">http://www.boost.org/</a></td>
+</tr>
+<tr>
+  <td>zlib library</td><td>1.2.3</td><td>No</td><td><a href="http://www.zlib.net/">http://www.zlib.net/</a></td>
+</tr>
+<tr>
+  <td>gzip</td><td>1.3.5</td><td>No</td><td><a href="http://www.gzip.org/">http://www.gzip.org/</a></td>
+</tr>
+<tr>
+  <td>libbzip library</td><td>1.0.0</td><td>No</td><td><a href="http://www.bzip.org/">http://www.bzip.org/</a></td>
+</tr>
+<tr>
+  <td>bzip2</td><td>1.0.3</td><td>No</td><td><a href="http://www.bzip.org/">http://www.bzip.org/</a></td>
+</tr>
+<tr>
+  <td>Doxygen</td><td>1.7.1</td><td>No</td><td><a href="http://www.stack.nl/~dimitri/doxygen/">http://www.stack.nl/~dimitri/doxygen/</a></td>
+</tr>
+<caption>Optional and required tools to compile or run QScores-Archiver</caption>
+</table>
+
+<p>Experiments in the paper using QScores-Archiver was executed on Linux systems running Debian 6.0 (squeeze) or CentOS 5.4.  Both optional and required tools for compiling or using QScores-Archiver is listed in the table above.  The versions represent the tools used during software development or when running the experiments in the paper.  They do not represent the minimum requirements; it is possible that lower versions can be used.</p>
+
+<p>The Boost Library must be both installed and compiled to make use of the <b>program_options</b>, <b>system</b>, and <b>filesystem</b> libraries.  Under some Linux distributions, Boost can be installed using its associated package manager (such as "aptitude" for Debian and Ubuntu).  Consult the Boost documentation for further information.</p>
+
+<p>The compression libraries and executables zlib, gzip, libbzip, and bzip2 are all optional and the software will compile without them.</p>
+
+<p>Doxygen is a documentation system to extract comments that have been placed inline in the source code.  See the section below entitled "<a href=README.html#doxygen>Software Documentation</a>" for more information.</p>
+
+
+
+<h2 id="compiling">Compiling</h2>
+
+<p>The QScores-Archiver software is written in C++ and has been compiled using v4.1.2 of g++.  The system has been tested on a 64-bit system, but it should work on other architectures.</p>
+
+<p>CMake (at least version 2.8) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories.  We give some brief instructions below on how to do this:</p>
+
+<ol>
+<li>Install Boost; consult the Boost documentation on up-to-date information on how to do this.  Then set the variable BOOST_ROOT to the location of Boost if it has not already been set:
+  <blockquote><tt>export BOOST_ROOT=/usr/local/boost_1_46_0/</tt></blockquote>
+</li>
+
+<li>Expand the QScores-Archiver archive in a temporary directory  [i.e., <tt>~/tmp/</tt>].  As a result, another directory will be created inside [i.e., <tt>~/tmp/qscores-archiver-0.99.0-src/</tt>].</li>
+
+<li>Within <tt>~/tmp/qscores-archiver-0.99.0-src/</tt>, create a <tt>build/</tt> subdirectory and then enter it (Actually, <tt>build/</tt> can be anywhere since it will be deleted later; this is just an example.).  Then run
+
+      <blockquote><tt>cmake ..</tt></blockquote>
+
+where ".." represents the location of the top-level <tt>CMakeLists.txt</tt>.  By default, this will set up a Makefile to install the program into <tt>/usr/local/</tt>, which would require system administrator access.  To use another directory, type this:
+
+      <blockquote><tt>cmake .. -DCMAKE_INSTALL_PREFIX=~/tmp</tt></blockquote>
+
+    replacing the installation prefix with whatever you prefer.
+</li>
+<li>Type <tt>make</tt> to compile the C++ source code of QScores-Archiver.  If this succeeds, then the executable should in the <tt>build</tt> subdirectory as <tt>qscores/qscores-archiver</tt>.</li>
+
+<li>Type <tt>make test</tt> to run through a series of tests.  There are <b>62</b> tests in total and each one should say <b>Passed</b>.</li>
+
+<li>Finally, type <tt>make install</tt> to install the software.  This copies the important files from the archive to the installation prefix specified in the cmake line above (see "<a href=README.html#structure>Files and Directories</a>" for information about the structure) .  The <tt>~/tmp/qscores-archiver-0.99.0-src/</tt> directory, including the <tt>build/</tt> directory, can now be deleted, unless you are interested in viewing the source code.</li>
+</ol>
+
+
+
+<h2 id="doxygen">Software Documentation</h2>
+
+<p>QScores-Archiver was developed with inline comments that can be extracted using the Doxygen documentation system.  They can be created using <b>make</b> as well.  Here, we show how to generate the documentation for the QScores-Archiver main code.</p>
+
+<ol>
+<li>In the directory where you ran <tt>make</tt> to compile the executable, type <tt>make qscores-archiver-doc</tt>.  If Doxygen can be found, then the documentation will be generated in the <tt>doc/</tt> subdirectory.</li>
+<li>You may choose to do a <tt>make install</tt> which would put this documentation in the <tt>doc/</tt> subdirectory under the installation prefix.  See "<a href=README.html#structure>Files and Directories</a>" for more information.</li>
+</ol>
+
+<p>The following HTML file can be used if the documentation has been <i>installed</i>:  <a href="./documentation.html">documentation.html</a>.  Of course, the documentation has to be created first according to step 1.</p>
+
+
+<h2 id="structure">Files and Directories</h2>
+
+<p>After installation, the following directory structure should result:</p>
+
+<ul>
+<li><i>Directory you specified when you ran cmake</i></li>
+  <ul>
+  <li>bin/                 - Binary files, including the <b>qscores-archiver</b> executable</li>
+  <li>data/                - Data directory
+    <ul>
+      <li>sample.qs        - Sample data file of 1,000 quality scores of length 100 qscores each</li>
+    </ul>
+  </li>
+  <li>doc/                 - Documentation directory; Doxygen-generated documents are placed here
+    <ul>
+    <li>documentation.html - Top-level HTML file for viewing Doxygen-generated documents</li>
+    <li>COPYING            - Copy of GNU GPL license v3</li>
+    <li>COPYING.DOC        - Copy of GNU FDL license v1.3</li>
+    <li>COPYING.LESSER     - Copy of GNU LGPL license v3</li>
+    <li>AUTHORS            - Authors of the software</li>
+    <li>ChangeLog          - History of changes</li>
+    <li>README.html        - This file in HTML</li>
+    <li>README             - This file as plain text</li>
+    <li>VERSION            - How to determine the software version</li>
+    </ul>
+  </li>  
+  </ul>
+</ul>
+
+<p>If no installation prefix was provided and the installation is performed with root access, then system defaults are used instead.</p>
+
+<p><b>[*]</b> Source code is not copied when you do a "make install".  If you are interested in examining the source, then look under the <tt>src/</tt> directory in the expanded archive.</p>
+
+
+<h2 id="running">Running QScores-Archiver</h2>
+
+<h3 id="lossy">Lossy Transformations</h3>
+
+<p>Three lossy transformations have been incorporated into QScores-Archiver.  To facilitate the discussion in the paper, their parameters have been unified as <b>|&Sigma;|</b> -- the size of the new alphabet after the transformation.  In the program, they actually each have a different parameter, as outlined in the next table.</p>
+
+<table cellpadding="0" cellspacing="3" border="1" align="center">
+<caption>Parameters for lossy transformations</caption>
+<tr><th>Lossy method</th><th>Abbreviation</th><th>Parameter</th><th>Meaning</th></tr>
+<tr><td>Truncation</td><td>trunc</td><td>--trunc <b>x</b></td><td>All qscores larger than <b>x</b> are changed to <b>x</b>.</td></tr>
+<tr><td>Uniform binning</td><td>unibinning</td><td>--unibin <b>x</b></td><td>Bins the error probabilities in a uniform manner by dividing the range of probabilities [0, 1] into <b>x</b> bins.</td></tr>
+<tr><td>Logarithmic binning</td><td>logbinning</td><td>--logbin <b>x</b></td><td>Bins the quality scores (which themselves are on a logarithmic scale) so that each bin has <b>x</b> values at most.  Binning starts from the lowest PHRED score (i.e., highest error probaiblity).</td></tr>
+</table>
+
+<p>The potential confusion is that <b>x</b> has a different meaning in each case but end up achieving the same thing -- reducing the size of the quality scores' alphabet.  This reduced alphabet is used for the graphs in the paper.  A <b>one-to-many</b> mapping exists between <b>x</b> for each lossy method and <b>|&Sigma;|</b>.  For truncation, the mapping is obvious.  For the other two cases, in the <tt>doc/</tt> directory, we provide two text files:</p>
+
+<ul>
+<li><tt>unibinning.txt</tt></li>
+<li><tt>logbinning.txt</tt></li>
+</ul>
+
+<p>Both of these files are two-column tables.  The first column is the parameter to give to QScores-Archiver (i.e., <b>x</b>) and the second column is the size of the alphabet (i.e., <b>|&Sigma;|</b>).  Note that ties in the alphabet size are possible -- logarithmic binning with either 12 quality scores per bin or 13 quality scores per bin will results in an alphabet of size 8.  For the paper, even duplicate <b>|&Sigma;|</b> were plotted -- the difference is just too small to notice in the graphs.</p> 
+
+
+<h3 id="sample">Sample Run</h3>
+
+<p>A sample data file "<tt>data/sample.qs</tt>" is included in the <tt>data/</tt> subdirectory.  It is a list of 1,000 randomly generated "quality scores" of length 100 each (since they are randomly generated, it is more correct to call them a sequence of characters whose range is stipulated by the Sanger-FASTQ range).  Assuming the software has been installed, then this data file and the executable are in the same parent directory.  Here are some example executions:</p>
+
+<dl>
+<dt><tt>./qscores-archiver --help</tt></dt>
+<dd>Display a list of available options.</dd>
+<dt><tt>./qscores-archiver --checkextern</tt></dt>
+<dd>Show the status of externally installed software (i.e., zlib, gzip, etc.)</dd>
+<dt><tt>./qscores-archiver --checkbin --mapping sanger --logbin 2</tt></dt>
+<dd>Examine the bins created from using logarithmic binning with 2 qscores per bin and Sanger-FASTQ format.</dd>
+<dt><tt>./qscores-archiver --checkunbin --mapping sanger --unibin 10000</tt></dt>
+<dd>Examine the reversed bins created from uniform binning with the interval [0, 1] divided into 10,000 bins.</dd>
+<dt><tt>./qscores-archiver --input ../data/sample.qs --output test.qs --encode --binary --verbose</tt></dt>
+<dd>Binary encode the test file with verbose output.</dd>
+<dt><tt>./qscores-archiver --input test.qs --output test-out.qs --decode --verbose</tt></dt>
+<dd>Binary decode the compressed test file with verbose output</dd>
+<dt><tt>./qscores-archiver --input ../data/sample.qs --output test.qs --encode --nocompress</tt></dt>
+<dd>Do not perform any transformations or compressions (i.e., the data file is unchanged and is identical to the output).</dd>
+<dt><tt>./qscores-archiver --input ../data/sample.qs --output test.qs --encode --gamma --logbin 10 --blocksize 10</tt></dt>
+<dd>Perform logarithmic binning with 10 qscores per bin and Gamma code the result.  Also, create blocks of 10 reads each.</dd>
+</dl>
+
+<p>If decoding is being performed and <tt>--nocompress</tt> was not used, then the transformation and compression options are included in the compressed file.  So, they do not need to be provided when decompressing.  Obviously, if <tt>--nocompress</tt> was selected, then the output cannot be decompressed.  This option's purpose is to see the output from the lossy transformations; to make use of them, note that 1-based bin numbers have been encoded.  You will need to add <b>32</b> to each value to put them into Sanger-FASTQ format.</p>  
+
+
+
+<h2 id="future">Future Work</h2>
+
+<p>There are many things that were intended for QScores-Archiver which have not yet been implemented.  For example, additional compression methods such as Re-Pair [1], Arithmetic coding, and Prediction by Partial Matching were considered.  They may still be implemented in the future if there is enough interest from users.</p>
+
+<p>Also, QScores-Archiver does <b>not</b> make use of standard input and output.  To be honest, I tried and did not know how in C++ for binary input/output.  However, since this would be a useful feature to have to reduce disk I/O if QScores-Archiver is used in a pipeline, this remains a priority for me.</p>
+
+<p>[1]  N. J. Larsson and A. Moffat. Offline Dictionary-Based Compression. In Proc. IEEE, 88(11), 1722-1732, November 2000.  See also this <a href="http://www.cbrc.jp/~rwan/en/restore.html">link</a>.</p>
+
+
+<h2 id="about">About QScores-Archiver</h2>
+
+<p>This software was implemented by Raymond Wan.  Most of it was implemented while I was at the University of Tokyo (<a href="http://www.cb.k.u-tokyo.ac.jp/asailab/members/rwan">http://www.cb.k.u-tokyo.ac.jp/asailab/members/rwan</a>).  I am currently at the Chinese University of Hong Kong:
+  <blockquote>
+  E-mail:  <a href="rwan@cuhk.edu.hk">rwan@cuhk.edu.hk</a><br>
+  Homepage:  <a href="http://ihome.cuhk.edu.hk/~b126594/">http://ihome.cuhk.edu.hk/~b126594/</a>
+  </blockquote>
+</p>
+
+<p>The latest version of QScores-Archiver can be downloaded from the above web page.  Click on "Software" in the menu on the main page.  This software is actively maintained.  If you have any information about bugs, suggestions for the documentation or just have some general comments, feel free to write to the above address.</p>
+
+<p>As noted <a href=README.html#require>above</a>, many tools were used used for the development of QScores-Archiver.  In addition, the text version of this document was generated using <a href="http://www.mbayer.de/html2text/">html2text</a>.</p>
+
+
+
+<h2 id="copyright">Copyright and License</h2>
+
+<address>QScores-Archiver (Quality scores archiver)<br>
+Copyright (C) 2011  by Raymond Wan</address>
+
+<p>QScores-Archiver is distributed under the terms of the GNU Lesser General Public License (LGPL, version 3 or later) -- see the file <tt>COPYING</tt> and <tt>COPYING.LESSER</tt> for details.</p>
+
+<p>Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts and no Back-Cover Texts.  A copy of the license is included with the archive as <tt>COPYING.DOC</tt>.</p>
+
+<p>Subversion version:  $Id: README.html 224 2011-11-06 15:32:09Z rwan $</p>
+
+</body>
+</html>
+
