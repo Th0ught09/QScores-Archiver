@@ -131,14 +131,6 @@ ADD_SUBDIRECTORY_ONCE (../../libraries/huffman ${CMAKE_CURRENT_BINARY_DIR}/huffm
 ADD_SUBDIRECTORY_ONCE (../../libraries/interpolative ${CMAKE_CURRENT_BINARY_DIR}/interpolative)
 ADD_SUBDIRECTORY_ONCE (../../libraries/qscores-single ${CMAKE_CURRENT_BINARY_DIR}/qscores-single)
 ADD_SUBDIRECTORY_ONCE (../../libraries/qscores-settings ${CMAKE_CURRENT_BINARY_DIR}/qscores-settings)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/external-software)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/block-statistics)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/bitbuffer)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/bitio)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/huffman)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/interpolative)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/qscores-single)
-ADD_DEPENDENCIES (qscores-archiver ../../libraries/qscores-settings)
 
 
 ########################################

@@ -120,7 +120,6 @@ ENDIF (NOT TARGET bitio_ar)
 
 INCLUDE_DIRECTORIES (../systemcfg ../bitbuffer)
 ADD_SUBDIRECTORY_ONCE (../bitbuffer ${CMAKE_CURRENT_BINARY_DIR}/bitbuffer)
-ADD_DEPENDENCIES (bitio-test ../bitbuffer)
 
 
 ########################################

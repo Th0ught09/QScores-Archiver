@@ -114,7 +114,6 @@ ENDIF (NOT TARGET block_statistics_ar)
 
 INCLUDE_DIRECTORIES (../../libraries/systemcfg)
 ADD_SUBDIRECTORY_ONCE (../../libraries/systemcfg ${CMAKE_CURRENT_BINARY_DIR}/systemcfg)
-ADD_DEPENDENCIES (block-statistics ../../libraries/systemcfg)
 
 
 ########################################

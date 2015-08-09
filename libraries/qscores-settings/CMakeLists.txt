@@ -117,9 +117,6 @@ INCLUDE_DIRECTORIES (../../libraries/systemcfg ../../libraries/bitbuffer ../../l
 ADD_SUBDIRECTORY_ONCE (../../libraries/bitbuffer ${CMAKE_CURRENT_BINARY_DIR}/bitbuffer)
 ADD_SUBDIRECTORY_ONCE (../../libraries/bitio ${CMAKE_CURRENT_BINARY_DIR}/bitio)
 ADD_SUBDIRECTORY_ONCE (../../libraries/qscores-single ${CMAKE_CURRENT_BINARY_DIR}/qscores-single)
-ADD_DEPENDENCIES (qscores-settings ../../libraries/bitbuffer)
-ADD_DEPENDENCIES (qscores-settings ../../libraries/bitio)
-ADD_DEPENDENCIES (qscores-settings ../../libraries/qscores-single)
 
 ########################################
 ##  Set initial compilation flags

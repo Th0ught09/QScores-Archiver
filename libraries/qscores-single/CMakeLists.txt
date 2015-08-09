@@ -121,10 +121,6 @@ ADD_SUBDIRECTORY_ONCE (../../libraries/block-statistics ${CMAKE_CURRENT_BINARY_D
 ADD_SUBDIRECTORY_ONCE (../../libraries/bitbuffer ${CMAKE_CURRENT_BINARY_DIR}/bitbuffer)
 ADD_SUBDIRECTORY_ONCE (../../libraries/bitio ${CMAKE_CURRENT_BINARY_DIR}/bitio)
 ADD_SUBDIRECTORY_ONCE (../../libraries/interpolative ${CMAKE_CURRENT_BINARY_DIR}/interpolative)
-ADD_DEPENDENCIES (qscores-single ../../libraries/block-statistics)
-ADD_DEPENDENCIES (qscores-single ../../libraries/bitbuffer)
-ADD_DEPENDENCIES (qscores-single ../../libraries/bitio)
-ADD_DEPENDENCIES (qscores-single ../../libraries/interpolative)
 
 
 ########################################

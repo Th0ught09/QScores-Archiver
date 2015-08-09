@@ -112,8 +112,6 @@ ENDIF (NOT TARGET bitbuffer_ar)
 ########################################
 ##  Add dependencies and directories
 
-ADD_DEPENDENCIES (bitbuffer ../systemcfg)
-
 INCLUDE_DIRECTORIES (../systemcfg)
 
 

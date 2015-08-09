@@ -121,10 +121,6 @@ ADD_SUBDIRECTORY_ONCE (../../libraries/systemcfg ${CMAKE_CURRENT_BINARY_DIR}/sys
 ADD_SUBDIRECTORY_ONCE (../../libraries/bitbuffer ${CMAKE_CURRENT_BINARY_DIR}/bitbuffer)
 ADD_SUBDIRECTORY_ONCE (../../libraries/bitio ${CMAKE_CURRENT_BINARY_DIR}/bitio)
 ADD_SUBDIRECTORY_ONCE (../../libraries/interpolative ${CMAKE_CURRENT_BINARY_DIR}/interpolative)
-ADD_DEPENDENCIES (huffman ../../libraries/systemcfg)
-ADD_DEPENDENCIES (huffman ../../libraries/bitbuffer)
-ADD_DEPENDENCIES (huffman ../../libraries/bitio)
-ADD_DEPENDENCIES (huffman ../../libraries/interpolative)
 
 
 ########################################
