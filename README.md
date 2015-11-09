@@ -1,96 +1,59 @@
+QScores-Archiver
+================
 
-
-****** QScores-Archiver ******
-
-**** Table of Contents ****
-   1. Introduction
-   2. Requirements
-   3. Compiling
-   4. Software_Documentation
-   5. Files_and_Directories
-   6. Running_QScores-Archiver
-   7. Future_Work
-   8. About_QScores-Archiver
-   9. Copyright_and_License
-
-
-***** Introduction *****
-
+Introduction
+------------
 
 QScores-Archiver is a system for archiving quality scores in FASTQ formatted
 next generation sequencing data. To achieve this, it employs lossy and lossless
 transformations coupled with compression. It is implemented as a command-line
 tool, but has been developed so that users can link this software with their
 own source code. This document accompanies the archive, which also includes:
-    * source code in C++,
-    * other important documentation and license information, and
-    * a very small data file for testing.
+  * source code in C++,
+  * other important documentation and license information, and
+  * a very small data file for testing.
 
 This archive does not include any binaries. This program is described in the
 paper:
 
+    R. Wan, V. N. Anh, and K. Asai. Transformations for the Compression of FASTQ Quality Scores of Next Generation Sequencing Data. Bioinformatics, 28(5):623-635, 2012
 
-     R. Wan, V. N. Anh, and K. Asai. Transformations for the Compression
-     of FASTQ Quality Scores of Next Generation Sequencing Data. Submitted
-     for peer-review, 2011.
-
-which we refer to as "the paper" throughout this document.
+which we refer to as "the paper" throughout this document.  The software has been updated in 2015 for current compilers.
 
 
-***** Requirements *****
+Requirements
+------------
 
-
-    _______________________________________________________________________
-   |               |       |         |                                     |
-   |Software_______|Version|Required?|Web_site_____________________________|
-   |               |       |         |                                     |
-   |g++____________|4.1.2__|Yes______|http://gcc.gnu.org/__________________|
-   |               |       |         |                                     |
-   |CMake__________|2.8.2__|Yes______|http://www.cmake.org/________________|
-   |               |       |         |                                     |
-   |Boost_library__|1.46.0_|Yes______|http://www.boost.org/________________|
-   |               |       |         |                                     |
-   |zlib_library___|1.2.3__|No_______|http://www.zlib.net/_________________|
-   |               |       |         |                                     |
-   |gzip___________|1.3.5__|No_______|http://www.gzip.org/_________________|
-   |               |       |         |                                     |
-   |libbzip_library|1.0.0__|No_______|http://www.bzip.org/_________________|
-   |               |       |         |                                     |
-   |bzip2__________|1.0.3__|No_______|http://www.bzip.org/_________________|
-   |               |       |         |                                     |
-   |Doxygen________|1.7.1__|No_______|http://www.stack.nl/~dimitri/doxygen/|
+|Software       |Version  |Required?  |Web site                             |
+|---------------|:-------:|:---------:|-------------------------------------|
+|g++            | 5.2.1   | Yes       |http://gcc.gnu.org/                  |
+|CMake          | 3.2.2   | Yes       |http://www.cmake.org/                |
+|Boost library  | 1.59.0  | Yes       |http://www.boost.org/                |
+|zlib library   | 1.2.3   | No        |http://www.zlib.net/                 |
+|gzip           | 1.3.5   | No        |http://www.gzip.org/                 |
+|libbzip library| 1.0.0   | No        |http://www.bzip.org/                 |
+|bzip2          | 1.0.3   | No        |http://www.bzip.org/                 |
+|Doxygen        | 1.8.9.1 | No        |http://www.stack.nl/~dimitri/doxygen/|
 
 
 
-Experiments in the paper using QScores-Archiver was executed on Linux systems
-running Debian 6.0 (squeeze) or CentOS 5.4. Both optional and required tools
-for compiling or using QScores-Archiver is listed in the table above. The
-versions represent the tools used during software development or when running
-the experiments in the paper. They do not represent the minimum requirements;
-it is possible that lower versions can be used.
+Experiments in the paper using QScores-Archiver was executed on Linux systems running Debian 6.0 (squeeze) or CentOS 5.4.  Currently, it is being maintained on an Ubuntu 15.10 system (i.e., it's been tested on such a system).  Both optional and required tools for compiling or using QScores-Archiver is listed in the table above. The versions represent the tools used during software development or when running the experiments in the paper. They do not represent the minimum requirements; it is possible that lower versions can be used.
 
-The Boost Library must be both installed and compiled to make use of the
-program_options, system, and filesystem libraries. Under some Linux
-distributions, Boost can be installed using its associated package manager
-(such as "aptitude" for Debian and Ubuntu). Consult the Boost documentation for
-further information.
+The Boost Library must be both installed and compiled to make use of the program_options, system, and filesystem libraries. Under some Linux distributions, Boost can be installed using its associated package manager (such as "aptitude" for Debian and Ubuntu). Consult the Boost documentation for further information.
 
-The compression libraries and executables zlib, gzip, libbzip, and bzip2 are
-all optional and the software will compile without them.
+The compression libraries and executables zlib, gzip, libbzip, and bzip2 are all optional and the software will compile without them.
 
-Doxygen is a documentation system to extract comments that have been placed
-inline in the source code. See the section below entitled "Software
-Documentation" for more information.
+Doxygen is a documentation system to extract comments that have been placed inline in the source code. See the section below entitled "Software Documentation" for more information.
 
 
-***** Compiling *****
-
+Compiling
+---------
 
 The QScores-Archiver software is written in C++ and has been compiled using
-v4.1.2 of g++. The system has been tested on a 64-bit system, but it should
+v5.2.1 of g++. The system has been tested on a 64-bit system, but it should
 work on other architectures.
 
-CMake (at least version 2.8) is used to compile the software and it is
+CMake (at least version 3.2.2) is used to compile the software and it is
 recommended that an "out-of-source" build is performed so as not to clutter the
 original source directories. We give some brief instructions below on how to do
 this:
@@ -99,14 +62,12 @@ this:
       Boost if it has not already been set:
 
 
-           export BOOST_ROOT=/usr/local/boost_1_46_0/
-   2. Expand the QScores-Archiver archive in a temporary directory [i.e., ~/
-      tmp/]. As a result, another directory will be created inside [i.e., ~/
-      tmp/qscores-archiver-0.99.0-src/].
-   3. Within ~/tmp/qscores-archiver-0.99.0-src/, create a build/ subdirectory
+           export BOOST_ROOT=/usr/local/boost_1_59_0/
+   2. Copy the QScores-Archiver archive in a temporary directory [i.e., ~/
+      tmp/qscores/].
+   3. Within ~/tmp/qscores/, create a build/ subdirectory
       and then enter it (Actually, build/ can be anywhere since it will be
       deleted later; this is just an example.). Then run
-
 
            cmake ..
       where ".." represents the location of the top-level CMakeLists.txt. By
@@ -114,24 +75,23 @@ this:
       local/, which would require system administrator access. To use another
       directory, type this:
 
-
            cmake .. -DCMAKE_INSTALL_PREFIX=~/tmp
       replacing the installation prefix with whatever you prefer.
    4. Type make to compile the C++ source code of QScores-Archiver. If this
       succeeds, then the executable should in the build subdirectory as
       qscores/qscores-archiver.
-   5. Type make test to run through a series of tests. There are 62 tests in
+   5. Type `make test` to run through a series of tests. There are 62 tests in
       total and each one should say Passed.
-   6. Finally, type make install to install the software. This copies the
+   6. Finally, type `make install` to install the software. This copies the
       important files from the archive to the installation prefix specified in
       the cmake line above (see "Files_and_Directories" for information about
-      the structure) . The ~/tmp/qscores-archiver-0.99.0-src/ directory,
+      the structure) . The ~/tmp/qscores/ directory,
       including the build/ directory, can now be deleted, unless you are
       interested in viewing the source code.
 
 
-***** Software Documentation *****
-
+Software Documentation
+----------------------
 
 QScores-Archiver was developed with inline comments that can be extracted using
 the Doxygen documentation system. They can be created using make as well. Here,
@@ -148,8 +108,8 @@ documentation.html. Of course, the documentation has to be created first
 according to step 1.
 
 
-***** Files and Directories *****
-
+Files and Directories
+---------------------
 
 After installation, the following directory structure should result:
     * Directory you specified when you ran cmake
@@ -166,9 +126,6 @@ After installation, the following directory structure should result:
                 # COPYING.LESSER - Copy of GNU LGPL license v3
                 # AUTHORS - Authors of the software
                 # ChangeLog - History of changes
-                # README.html - This file in HTML
-                # README - This file as plain text
-                # VERSION - How to determine the software version
 
 If no installation prefix was provided and the installation is performed with
 root access, then system defaults are used instead.
@@ -178,35 +135,21 @@ interested in examining the source, then look under the src/ directory in the
 expanded archive.
 
 
-***** Running QScores-Archiver *****
+Running QScores-Archiver
+------------------------
 
-**** Lossy Transformations ****
+### Lossy Transformations
 
 Three lossy transformations have been incorporated into QScores-Archiver. To
 facilitate the discussion in the paper, their parameters have been unified as
 |Σ| -- the size of the new alphabet after the transformation. In the program,
 they actually each have a different parameter, as outlined in the next table.
-                     Parameters for lossy transformations
- _____________________________________________________________________________
-|                   |            |          |                                 |
-|Lossy_method_______|Abbreviation|Parameter_|Meaning__________________________|
-|                   |            |          |                                 |
-|Truncation         |trunc       |--trunc x |All qscores larger than x are    |
-|___________________|____________|__________|changed_to_x.____________________|
-|                   |            |          |                                 |
-|                   |            |          |Bins the error probabilities in a|
-|Uniform binning    |unibinning  |--unibin x|uniform manner by dividing the   |
-|                   |            |          |range of probabilities [0, 1]    |
-|___________________|____________|__________|into_x_bins._____________________|
-|                   |            |          |                                 |
-|                   |            |          |Bins the quality scores (which   |
-|                   |            |          |themselves are on a logarithmic  |
-|                   |            |          |scale) so that each bin has x    |
-|Logarithmic binning|logbinning  |--logbin x|values at most. Binning starts   |
-|                   |            |          |from the lowest PHRED score      |
-|                   |            |          |(i.e., highest error             |
-|___________________|____________|__________|probaiblity).____________________|
 
+|Lossy method       |Abbreviation|Parameter |Meaning                          |
+|-------------------|------------|----------|---------------------------------|
+|Truncation         |trunc       |--trunc x |All qscores larger than x are changed_to_x.|
+|Uniform binning    |unibinning  |--unibin x|Bins the error probabilities in a uniform manner by dividing the range of probabilities [0, 1] into_x_bins.|
+|Logarithmic binning|logbinning  |--logbin x|Bins the quality scores (which themselves are on a logarithmic scale) so that each bin has x values at most. Binning starts from the lowest PHRED score (i.e., highest error probability). |
 
 
 The potential confusion is that x has a different meaning in each case but end
@@ -215,8 +158,8 @@ alphabet. This reduced alphabet is used for the graphs in the paper. A one-to-
 many mapping exists between x for each lossy method and |Σ|. For truncation,
 the mapping is obvious. For the other two cases, in the doc/ directory, we
 provide two text files:
-    * unibinning.txt
-    * logbinning.txt
+  * unibinning.txt
+  * logbinning.txt
 
 Both of these files are two-column tables. The first column is the parameter to
 give to QScores-Archiver (i.e., x) and the second column is the size of the
@@ -225,7 +168,8 @@ alphabet (i.e., |Σ|). Note that ties in the alphabet size are possible -
 scores per bin will results in an alphabet of size 8. For the paper, even
 duplicate |Σ| were plotted -- the difference is just too small to notice in the
 graphs.
-**** Sample Run ****
+
+### Sample Run
 
 A sample data file "data/sample.qs" is included in the data/ subdirectory. It
 is a list of 1,000 randomly generated "quality scores" of length 100 each
@@ -266,8 +210,8 @@ that 1-based bin numbers have been encoded. You will need to add 32 to each
 value to put them into Sanger-FASTQ format.
 
 
-***** Future Work *****
-
+Future Work
+-----------
 
 There are many things that were intended for QScores-Archiver which have not
 yet been implemented. For example, additional compression methods such as Re-
@@ -284,32 +228,29 @@ Archiver is used in a pipeline, this remains a priority for me.
 IEEE, 88(11), 1722-1732, November 2000. See also this link.
 
 
-***** About QScores-Archiver *****
-
+About QScores-Archiver
+----------------------
 
 This software was implemented by Raymond Wan. Most of it was implemented while
-I was at the University of Tokyo (http://www.cb.k.u-tokyo.ac.jp/asailab/
-members/rwan). I am currently at the Chinese University of Hong Kong:
+I was at the University of Tokyo (around 2010-2011). 
+
+Currently, I'm at the Hong Kong University of Science and Technology:
 
 
-     E-mail: rwan@cuhk.edu.hk
-     Homepage: http://ihome.cuhk.edu.hk/~b126594/
+     E-mail: rwan.work@gmail.com or raymondwan@ust.hk
+     
+     Homepage: http://www.rwanwork.info/
 
-The latest version of QScores-Archiver can be downloaded from the above web
-page. Click on "Software" in the menu on the main page. This software is
-actively maintained. If you have any information about bugs, suggestions for
-the documentation or just have some general comments, feel free to write to the
-above address.
+The latest version of QScores-Archiver can be downloaded from GitHub. C
 
-As noted above, many tools were used used for the development of QScores-
-Archiver. In addition, the text version of this document was generated using
-html2text.
+If you have any information about bugs, suggestions for the documentation or just have some general comments, feel free to write to the above address.
 
 
-***** Copyright and License *****
+Copyright and License
+---------------------
 
      QScores-Archiver (Quality scores archiver)
-     Copyright (C) 2011 by Raymond Wan
+     Copyright (C) 2011-2015 by Raymond Wan
 
 QScores-Archiver is distributed under the terms of the GNU Lesser General
 Public License (LGPL, version 3 or later) -- see the file COPYING and
@@ -321,4 +262,11 @@ published by the Free Software Foundation; with no Invariant Sections, no
 Front-Cover Texts and no Back-Cover Texts. A copy of the license is included
 with the archive as COPYING.DOC.
 
-Subversion version: $Id: README.html 224 2011-11-06 15:32:09Z rwan $
+
+Update in 2015
+--------------
+
+This GitHub repository was created from the original tarball on my homepage a few years ago.  Initially, it was identical to the version described in the paper.  Hopefully, it will be easier for me to maintain in GitHub.
+
+Please see the doc/ directory for license and documentation.
+

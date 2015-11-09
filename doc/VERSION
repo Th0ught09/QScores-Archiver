@@ -1,4 +1,0 @@
-The version of QScores-Archiver that you are using can be found in the 
-../cmake/global.cmake file as:
-
-(QSCORES_VERSION_MAJOR).(QSCORES_VERSION_MINOR)
