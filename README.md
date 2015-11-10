@@ -112,21 +112,23 @@ Files and Directories
 ---------------------
 
 After installation, the following directory structure should result:
-    * Directory you specified when you ran cmake
-          o bin/ - Binary files, including the qscores-archiver executable
-          o data/ - Data directory
-                # sample.qs - Sample data file of 1,000 quality scores of
-                  length 100 qscores each
-          o doc/ - Documentation directory; Doxygen-generated documents are
-            placed here
-                # documentation.html - Top-level HTML file for viewing Doxygen-
-                  generated documents
-                # COPYING - Copy of GNU GPL license v3
-                # COPYING.DOC - Copy of GNU FDL license v1.3
-                # COPYING.LESSER - Copy of GNU LGPL license v3
-                # AUTHORS - Authors of the software
-                # ChangeLog - History of changes
 
+
+    .                           Directory you specified when you ran `cmake`
+    ├── bin                     Binary files, including the qscores-archiver executable
+    ├── data                    Data directory
+    │   ├── sample.qs           Sample data file of 1,000 quality scores of length 100 qscores each
+    └── data                    Documentation directory; Doxygen-generated documents are placed here
+        ├── classes.png - Directed graph of dependencies between libraries.
+        ├── classes.dia - Graphviz source code for classes.png .
+        ├── documentation.html - Top-level HTML file for viewing Doxygen-generated documents
+        ├── COPYING - Copy of GNU GPL license v3
+        ├── COPYING.DOC - Copy of GNU FDL license v1.3
+        ├── COPYING.LESSER - Copy of GNU LGPL license v3
+        ├── AUTHORS - Authors of the software
+        └── ChangeLog - History of changes
+    
+    
 If no installation prefix was provided and the installation is performed with
 root access, then system defaults are used instead.
 
@@ -169,6 +171,7 @@ scores per bin will results in an alphabet of size 8. For the paper, even
 duplicate |Σ| were plotted -- the difference is just too small to notice in the
 graphs.
 
+
 ### Sample Run
 
 A sample data file "data/sample.qs" is included in the data/ subdirectory. It
@@ -177,26 +180,26 @@ is a list of 1,000 randomly generated "quality scores" of length 100 each
 of characters whose range is stipulated by the Sanger-FASTQ range). Assuming
 the software has been installed, then this data file and the executable are in
 the same parent directory. Here are some example executions:
-  ./qscores-archiver --help
+  * ./qscores-archiver --help
       Display a list of available options.
-  ./qscores-archiver --checkextern
+  * ./qscores-archiver --checkextern
       Show the status of externally installed software (i.e., zlib, gzip, etc.)
-  ./qscores-archiver --checkbin --mapping sanger --logbin 2
+  * ./qscores-archiver --checkbin --mapping sanger --logbin 2
       Examine the bins created from using logarithmic binning with 2 qscores
       per bin and Sanger-FASTQ format.
-  ./qscores-archiver --checkunbin --mapping sanger --unibin 10000
+  * ./qscores-archiver --checkunbin --mapping sanger --unibin 10000
       Examine the reversed bins created from uniform binning with the interval
       [0, 1] divided into 10,000 bins.
-  ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
+  * ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
   binary --verbose
       Binary encode the test file with verbose output.
-  ./qscores-archiver --input test.qs --output test-out.qs --decode --verbose
+  * ./qscores-archiver --input test.qs --output test-out.qs --decode --verbose
       Binary decode the compressed test file with verbose output
-  ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
+  * ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
   nocompress
       Do not perform any transformations or compressions (i.e., the data file
       is unchanged and is identical to the output).
-  ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
+  * ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
   gamma --logbin 10 --blocksize 10
       Perform logarithmic binning with 10 qscores per bin and Gamma code the
       result. Also, create blocks of 10 reads each.
@@ -236,9 +239,9 @@ I was at the University of Tokyo (around 2010-2011).
 
 Currently, I'm at the Hong Kong University of Science and Technology:
 
-
-     E-mail: rwan.work@gmail.com or raymondwan@ust.hk
-     
+     E-mails:  rwan.work@gmail.com 
+               OR 
+               raymondwan@ust.hk     
      Homepage: http://www.rwanwork.info/
 
 The latest version of QScores-Archiver can be downloaded from GitHub. C
@@ -262,11 +265,15 @@ published by the Free Software Foundation; with no Invariant Sections, no
 Front-Cover Texts and no Back-Cover Texts. A copy of the license is included
 with the archive as COPYING.DOC.
 
+Please see the doc/ directory for license and documentation.
 
-Update in 2015
---------------
+
+About This Repository
+---------------------
 
 This GitHub repository was created from the original tarball on my homepage a few years ago.  Initially, it was identical to the version described in the paper.  Hopefully, it will be easier for me to maintain in GitHub.
 
-Please see the doc/ directory for license and documentation.
+
+Raymond Wan
+November 10, 2015
 

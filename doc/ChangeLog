@@ -1,3 +1,6 @@
+2014-10-19  Raymond Wan  <rwan.work@gmail.com>
+  * Migration to GitHub.  Changes to program no longer being recorded in this file.  See the git log instead.
+
 2011-08-22  Raymond Wan  <r-wan@cb.k.u-tokyo.ac.jp>
   * Software released as v0.99
   
