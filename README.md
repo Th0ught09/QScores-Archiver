@@ -180,29 +180,32 @@ is a list of 1,000 randomly generated "quality scores" of length 100 each
 of characters whose range is stipulated by the Sanger-FASTQ range). Assuming
 the software has been installed, then this data file and the executable are in
 the same parent directory. Here are some example executions:
-  * ./qscores-archiver --help
-      Display a list of available options.
-  * ./qscores-archiver --checkextern
-      Show the status of externally installed software (i.e., zlib, gzip, etc.)
-  * ./qscores-archiver --checkbin --mapping sanger --logbin 2
-      Examine the bins created from using logarithmic binning with 2 qscores
-      per bin and Sanger-FASTQ format.
-  * ./qscores-archiver --checkunbin --mapping sanger --unibin 10000
-      Examine the reversed bins created from uniform binning with the interval
-      [0, 1] divided into 10,000 bins.
-  * ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
-  binary --verbose
-      Binary encode the test file with verbose output.
-  * ./qscores-archiver --input test.qs --output test-out.qs --decode --verbose
-      Binary decode the compressed test file with verbose output
-  * ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
-  nocompress
-      Do not perform any transformations or compressions (i.e., the data file
-      is unchanged and is identical to the output).
-  * ./qscores-archiver --input ../data/sample.qs --output test.qs --encode --
-  gamma --logbin 10 --blocksize 10
-      Perform logarithmic binning with 10 qscores per bin and Gamma code the
-      result. Also, create blocks of 10 reads each.
+
+
+  * Display a list of available options.
+    * `./qscores-archiver --help`
+      
+  * Show the status of externally installed software (i.e., zlib, gzip, etc.)
+    * `./qscores-archiver --checkextern`
+      
+  * Examine the bins created from using logarithmic binning with 2 qscores per bin and Sanger-FASTQ format.
+    * `./qscores-archiver --checkbin --mapping sanger --logbin 2`
+      
+  * Examine the reversed bins created from uniform binning with the interval [0, 1] divided into 10,000 bins.
+    * `./qscores-archiver --checkunbin --mapping sanger --unibin 10000`
+      
+  * Binary encode the test file with verbose output.
+    * `./qscores-archiver --input ../data/sample.qs --output test.qs --encode --binary --verbose`
+      
+  * Binary decode the compressed test file with verbose output
+    * `./qscores-archiver --input test.qs --output test-out.qs --decode --verbose`
+      
+  * Do not perform any transformations or compressions (i.e., the data file is unchanged and is identical to the output).
+    * `./qscores-archiver --input ../data/sample.qs --output test.qs --encode --nocompress`
+      
+  * Perform logarithmic binning with 10 qscores per bin and Gamma code the result. Also, create blocks of 10 reads each.
+    * `./qscores-archiver --input ../data/sample.qs --output test.qs --encode --gamma --logbin 10 --blocksize 10`
+      
 
 If decoding is being performed and --nocompress was not used, then the
 transformation and compression options are included in the compressed file. So,
