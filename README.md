@@ -277,6 +277,6 @@ About This Repository
 This GitHub repository was created from the original tarball on my homepage a few years ago.  Initially, it was identical to the version described in the paper.  Hopefully, it will be easier for me to maintain in GitHub.
 
 
-Raymond Wan
-November 10, 2015
+    Raymond Wan
+    November 10, 2015
 
