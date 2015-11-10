@@ -221,7 +221,7 @@ Future Work
 
 There are many things that were intended for QScores-Archiver which have not
 yet been implemented. For example, additional compression methods such as Re-
-Pair [1], Arithmetic coding, and Prediction by Partial Matching were
+Pair [1,2], Arithmetic coding, and Prediction by Partial Matching were
 considered. They may still be implemented in the future if there is enough
 interest from users.
 
@@ -230,24 +230,23 @@ honest, I tried and did not know how in C++ for binary input/output. However,
 since this would be a useful feature to have to reduce disk I/O if QScores-
 Archiver is used in a pipeline, this remains a priority for me.
 
-[1] N. J. Larsson and A. Moffat. Offline Dictionary-Based Compression. In Proc.
-IEEE, 88(11), 1722-1732, November 2000. See also this link.
+    [1] N. J. Larsson and A. Moffat. Offline Dictionary-Based Compression. In Proc. IEEE, 88(11), 1722-1732, November 2000. 
+    [2] See also [Re-Store](http://rwanwork.info/en/restore.html).
 
 
 About QScores-Archiver
 ----------------------
 
-This software was implemented by Raymond Wan. Most of it was implemented while
-I was at the University of Tokyo (around 2010-2011). 
+This software was implemented by Raymond Wan while I was at the Computational Biology Research Centre (Tokyo, Japan) and the University of Tokyo (around 2010-2011). 
 
 Currently, I'm at the Hong Kong University of Science and Technology:
 
      E-mails:  rwan.work@gmail.com 
                OR 
-               raymondwan@ust.hk     
-     Homepage: http://www.rwanwork.info/
+               raymondwan@ust.hk
+     WWW:  [Homepage](http://www.rwanwork.info/)
 
-The latest version of QScores-Archiver can be downloaded from GitHub. C
+The latest version of QScores-Archiver can be downloaded from [GitHub](https://github.com/rwanwork/QScores-Archiver).
 
 If you have any information about bugs, suggestions for the documentation or just have some general comments, feel free to write to the above address.
 
