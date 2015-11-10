@@ -119,14 +119,14 @@ After installation, the following directory structure should result:
     ├── data                    Data directory
     │   ├── sample.qs           Sample data file of 1,000 quality scores of length 100 qscores each
     └── data                    Documentation directory; Doxygen-generated documents are placed here
-        ├── classes.png - Directed graph of dependencies between libraries.
-        ├── classes.dia - Graphviz source code for classes.png .
-        ├── documentation.html - Top-level HTML file for viewing Doxygen-generated documents
-        ├── COPYING - Copy of GNU GPL license v3
-        ├── COPYING.DOC - Copy of GNU FDL license v1.3
-        ├── COPYING.LESSER - Copy of GNU LGPL license v3
-        ├── AUTHORS - Authors of the software
-        └── ChangeLog - History of changes
+        ├── classes.png         Directed graph of dependencies between libraries.
+        ├── classes.dia         Graphviz source code for classes.png .
+        ├── documentation.html  Top-level HTML file for viewing Doxygen-generated documents
+        ├── COPYING             Copy of GNU GPL license v3
+        ├── COPYING.DOC         Copy of GNU FDL license v1.3
+        ├── COPYING.LESSER      Copy of GNU LGPL license v3
+        ├── AUTHORS             Contributors to the software
+        └── ChangeLog           History of changes
     
     
 If no installation prefix was provided and the installation is performed with
