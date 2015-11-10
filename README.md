@@ -244,7 +244,8 @@ Currently, I'm at the Hong Kong University of Science and Technology:
      E-mails:  rwan.work@gmail.com 
                OR 
                raymondwan@ust.hk
-     WWW:  [Homepage](http://www.rwanwork.info/)
+
+My homepage is at [Homepage](http://www.rwanwork.info/).
 
 The latest version of QScores-Archiver can be downloaded from [GitHub](https://github.com/rwanwork/QScores-Archiver).
 
