@@ -1,0 +1,2 @@
+##  Allow "VERSION" in PROJECT command
+CMAKE_POLICY (SET CMP0048 NEW)
