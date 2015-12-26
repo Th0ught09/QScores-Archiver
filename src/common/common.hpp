@@ -28,8 +28,8 @@
 ///////////////////////////////////////////////////////////////////////////
 
 
-#ifndef SYSTEM_HPP
-#define SYSTEM_HPP
+#ifndef COMMON_HPP
+#define COMMON_HPP
 
 //!  Spacing for aligning the verbose output (in characters).
 const unsigned int g_VERBOSE_WIDTH = 40;
