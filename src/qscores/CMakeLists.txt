@@ -151,7 +151,7 @@ INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/qscores-single)
 INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/qscores-settings)
 INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/external-software)
 
-##  Add subdirectories to the build
+##  Location of module dependencies
 ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/external-software ${CMAKE_BINARY_DIR}/external-software)
 ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/block-statistics ${CMAKE_BINARY_DIR}/block-statistics)
 ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/bitbuffer ${CMAKE_BINARY_DIR}/bitbuffer)
