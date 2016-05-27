@@ -129,7 +129,7 @@ INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/bitbuffer)
 INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/bitio)
 INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/qscores-single)
 
-INCLUDE (add_subdirectory_once)
+##  Location of module dependencies
 ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/bitio ${CMAKE_CURRENT_BINARY_DIR}/bitio)
 ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/bitbuffer ${CMAKE_CURRENT_BINARY_DIR}/bitbuffer)
 ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/qscores-single ${CMAKE_CURRENT_BINARY_DIR}/qscores-single)

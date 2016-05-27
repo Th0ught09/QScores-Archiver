@@ -67,7 +67,6 @@ ENDIF (NOT DEFINED MAIN_SRC_PATH)
 ##  Include externally defined functions
 INCLUDE (policies)
 INCLUDE (global)
-INCLUDE (add_subdirectory_once)
 
 
 ########################################

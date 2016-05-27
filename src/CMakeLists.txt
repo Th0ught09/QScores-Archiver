@@ -71,7 +71,7 @@ INCLUDE_DIRECTORIES (${TARGET_NAME_EXEC} PUBLIC "${PROJECT_BINARY_DIR}")
 ##  Location of additional header files
 INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/qscores)
 
-##  Add subdirectories to the build
+##  Location of module dependencies
 ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/qscores ${CMAKE_BINARY_DIR}/qscores)
 
 
