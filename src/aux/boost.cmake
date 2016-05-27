@@ -7,7 +7,7 @@ IF (NOT Boost_FOUND)
     MESSAGE (FATAL_ERROR "EE\tThe environment variable BOOST_ROOT has to be set.")
   ENDIF ()
 
-  SET (Boost_NO_SYSTEM_PATHS true)
+  SET (Boost_NO_SYSTEM_PATHS ON)
   SET (Boost_USE_STATIC_LIBS   OFF)
   SET (Boost_USE_MULTITHREADED ON)
   SET (Boost_USE_STATIC_RUNTIME OFF)
