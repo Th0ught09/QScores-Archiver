@@ -237,19 +237,15 @@ Archiver is used in a pipeline, this remains a priority for me.
 About QScores-Archiver
 ----------------------
 
-This software was implemented by Raymond Wan while I was at the Computational Biology Research Centre (Tokyo, Japan) and the University of Tokyo (around 2010-2011). 
+This software was implemented while I was at the Computational Biology Research Centre (Tokyo, Japan) and the University of Tokyo (around 2010-2011).  My contact details:
 
-Currently, I'm at the Hong Kong University of Science and Technology:
-
-     E-mails:  rwan.work@gmail.com 
-               OR 
-               raymondwan@ust.hk
+     E-mail:  rwan.work@gmail.com 
 
 My homepage is [here](http://www.rwanwork.info/).
 
 The latest version of QScores-Archiver can be downloaded from [GitHub](https://github.com/rwanwork/QScores-Archiver).
 
-If you have any information about bugs, suggestions for the documentation or just have some general comments, feel free to write to the above address.
+If you have any information about bugs, suggestions for the documentation or just have some general comments, feel free to contact me via e-mail or GitHub.
 
 
 Copyright and License
