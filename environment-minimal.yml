@@ -1,0 +1,13 @@
+name: qscores
+channels:
+  - conda-forge
+  - r
+  - bioconda
+  - anaconda
+  - intel
+  - defaults
+dependencies:
+  - cmake
+  - doxygen
+prefix: /home/rwan/.conda/envs/qscores
+

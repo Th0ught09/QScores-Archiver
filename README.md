@@ -18,7 +18,7 @@ paper:
 
     R. Wan, V. N. Anh, and K. Asai. Transformations for the Compression of FASTQ Quality Scores of Next Generation Sequencing Data. Bioinformatics, 28(5):623-635, 2012
 
-which we refer to as "the paper" throughout this document.  The software has been updated in 2015 for current compilers.
+which we refer to as "the paper" throughout this document.  The software has been updated in 2020 for current compilers.
 
 
 Requirements
@@ -36,7 +36,6 @@ Requirements
 |Doxygen        | 1.8.9.1 | No        |http://www.stack.nl/~dimitri/doxygen/|
 
 
-
 Experiments in the paper using QScores-Archiver was executed on Linux systems running Debian 6.0 (squeeze) or CentOS 5.4.  Currently, it is being maintained on an Ubuntu 15.10 system (i.e., it's been tested on such a system).  Both optional and required tools for compiling or using QScores-Archiver is listed in the table above. The versions represent the tools used during software development or when running the experiments in the paper. They do not represent the minimum requirements; it is possible that lower versions can be used.
 
 The Boost Library must be both installed and compiled to make use of the program_options, system, and filesystem libraries. Under some Linux distributions, Boost can be installed using its associated package manager (such as "aptitude" for Debian and Ubuntu). Consult the Boost documentation for further information.
@@ -45,6 +44,14 @@ The compression libraries and executables zlib, gzip, libbzip, and bzip2 are all
 
 Doxygen is a documentation system to extract comments that have been placed inline in the source code. See the section below entitled "Software Documentation" for more information.
 
+###  conda
+
+A [conda](https://docs.conda.io/en/latest/) environment can be created to include some of the above dependencies.  However, Boost (the most important dependency) is excluded at the moment.
+
+To create the environment, type:
+
+    `conda env create -f environment.yml`
+    
 
 Compiling
 ---------

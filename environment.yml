@@ -1,0 +1,31 @@
+name: qscores
+channels:
+  - conda-forge
+  - r
+  - bioconda
+  - anaconda
+  - intel
+  - defaults
+dependencies:
+  - bzip2=1.0.8
+  - ca-certificates=2020.6.20
+  - cmake=3.18.2
+  - doxygen=1.8.20
+  - expat=2.2.9
+  - krb5=1.18.2
+  - libcurl=7.71.1
+  - libedit=3.1.20191231
+  - libgcc-ng=9.1.0
+  - libiconv=1.16
+  - libssh2=1.9.0
+  - libstdcxx-ng=9.1.0
+  - libuv=1.40.0
+  - lz4-c=1.9.2
+  - ncurses=6.2
+  - openssl=1.1.1h
+  - rhash=1.4.0
+  - xz=5.2.5
+  - zlib=1.2.11
+  - zstd=1.4.5
+prefix: /home/rwan/.conda/envs/qscores
+
