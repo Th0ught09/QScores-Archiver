@@ -1,0 +1,30 @@
+cff-version: 1.2.0
+title: Transformations for the Compression of FASTQ Quality Scores of Next Generation Sequencing Data
+message: 'If you use this software, please cite it as below.'
+type: software
+authors:
+  - given-names: R
+    family-names: Wan
+  - given-names: V N
+    family-names: Anh
+  - given-names: K
+    family-names: Asai
+preferred-citation:
+  type: article
+  authors:
+  - family-names: "Wan"
+    given-names: "R"
+    orcid: "https://orcid.org/0000-0003-3202-7008"
+  - family-names: "Anh"
+    given-names: "V N"
+  - family-names: "Asai"
+    given-names: "K"
+    orcid: "https://orcid.org/0000-0003-0909-4982"
+  doi: "https://doi.org/10.1002/asi.20515"
+  journal: "Bioinformatics"
+  start: 623 # First page number
+  end: 635 # Last page number
+  title: "Transformations for the Compression of FASTQ Quality Scores of Next Generation Sequencing Data"
+  issue: 28
+  volume: 5
+  year: 2012
