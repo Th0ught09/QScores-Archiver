@@ -1,28 +1,57 @@
-##  Set the root path for Boost from the environment variable
-IF (NOT Boost_FOUND)
-  # SET (Boost_DEBUG OFF)
+###########################################################################
+##  QScores-Archiver
+##  Software and library for transforming and compressing next generation
+##    sequencing data in FASTQ format.
+##
+##  Copyright (C) 2011-2020 by Raymond Wan, All rights reserved.
+##  Contact:  rwan.work@gmail.com
+##
+##  This file is part of QScores-Archiver.
+##
+##  QScores-Archiver is free software; you can redistribute it and/or
+##  modify it under the terms of the GNU Lesser General Public License
+##  as published by the Free Software Foundation; either version
+##  3 of the License, or (at your option) any later version.
+##
+##  QScores-Archiver is distributed in the hope that it will be useful,
+##  but WITHOUT ANY WARRANTY; without even the implied warranty of
+##  MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+##  GNU Lesser General Public License for more details.
+##
+##  You should have received a copy of the GNU Lesser General Public
+##  License along with QScores-Archiver; if not, see
+##  <http://www.gnu.org/licenses/>.
+###########################################################################
 
-  SET (BOOST_ROOT $ENV{BOOST_ROOT})
-  IF (NOT BOOST_ROOT)
-    MESSAGE (FATAL_ERROR "EE\tThe environment variable BOOST_ROOT has to be set.")
-  ENDIF ()
 
-  SET (Boost_NO_SYSTEM_PATHS ON)
-  SET (Boost_USE_STATIC_LIBS   OFF)
-  SET (Boost_USE_MULTITHREADED ON)
-  SET (Boost_USE_STATIC_RUNTIME OFF)
+##  Suppress warning about new versions of Boost
+set (Boost_NO_WARN_NEW_VERSIONS 1)
 
-  SET (BOOST_COMPILED_LIBRARIES program_options system filesystem serialization mpi)
-  FIND_PACKAGE (Boost 1.59.0 REQUIRED COMPONENTS ${BOOST_COMPILED_LIBRARIES})
+if (NOT Boost_FOUND)
+  ##  Set the root path for Boost from the environment variable
+  # set (Boost_DEBUG OFF)
+  set (BOOST_ROOT $ENV{BOOST_ROOT})
 
-  ##  Make Boost_FOUND a cached internal variable so that we do not keep searching for Boost during one CMake run
-  ##  Does *not* work; will try to figure it out some other day!
-#   SET (Boost_FOUND ${Boost_FOUND} CACHE INTERNAL "Boost found!")
-ENDIF ()
+  if (NOT BOOST_ROOT)
+    message (FATAL_ERROR "EE\tThe environment variable BOOST_ROOT has to be set.")
+  endif ()
 
-IF (Boost_FOUND)
-  INCLUDE_DIRECTORIES (${Boost_INCLUDE_DIRS})
-  TARGET_INCLUDE_DIRECTORIES (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")
-  TARGET_LINK_LIBRARIES (${TARGET_NAME_EXEC} ${Boost_LIBRARIES})
-ENDIF ()
+  set (Boost_NO_SYSTEM_PATHS ON)
+  set (Boost_USE_STATIC_LIBS   OFF)
+  set (Boost_USE_MULTITHREADED ON)
+  set (Boost_USE_STATIC_RUNTIME OFF)
+
+  ##  Disable search for boost-cmake, from Boost 1.70.0
+  ##    Helpful if there are conflicts between locally and system-installed versions
+  set (Boost_NO_BOOST_CMAKE OFF)
+
+  set (BOOST_COMPILED_LIBRARIES program_options system filesystem serialization mpi)
+  find_package (Boost 1.79.0 REQUIRED COMPONENTS ${BOOST_COMPILED_LIBRARIES})
+endif ()
+
+if (Boost_FOUND)
+  link_directories (${Boost_LIBRARY_DIRS})
+  target_include_directories (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")
+  target_link_libraries (${TARGET_NAME_EXEC} ${Boost_LIBRARIES})
+endif ()
 

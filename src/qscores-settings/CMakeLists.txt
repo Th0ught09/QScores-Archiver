@@ -22,7 +22,12 @@
 ##  License along with QScores-Archiver; if not, see 
 ##  <http://www.gnu.org/licenses/>.
 ###########################################################################
-CMAKE_MINIMUM_REQUIRED (VERSION 3.2)
+
+##  Set the minimum required CMake version
+cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
+
+##  Set policy CMP0144 to "new" (Run "cmake --help-policy CMP0144" for details.)
+cmake_policy (SET CMP0144 NEW)
 
 
 ########################################
