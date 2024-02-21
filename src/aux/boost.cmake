@@ -1,10 +1,6 @@
 ###########################################################################
-##  QScores-Archiver
-##  Software and library for transforming and compressing next generation
-##    sequencing data in FASTQ format.
-##
-##  Copyright (C) 2011-2020 by Raymond Wan, All rights reserved.
-##  Contact:  rwan.work@gmail.com
+##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
 ##
