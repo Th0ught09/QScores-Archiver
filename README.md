@@ -86,6 +86,10 @@ CMake (at least version 3.2.2) is used to compile the software and it is recomme
    5. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
    6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the cmake line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/qscores/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
 
+The dependencies between the various modules is depicted in the figure below (generated using `cmake` with the `--graphviz` option):
+
+![Dependencies](./dependencies.svg)
+
 
 Software Documentation
 ----------------------
@@ -207,7 +211,7 @@ Copyright and License
 ---------------------
 
      QScores-Archiver (Quality scores archiver)
-     Copyright (C) 2011-2015 by Raymond Wan
+     Copyright (C) 2011-2015, 2024 by Raymond Wan
 
 QScores-Archiver is distributed under the terms of the GNU Lesser General Public License (LGPL, version 3 or later) -- see the file COPYING and COPYING.LESSER for details.
 
