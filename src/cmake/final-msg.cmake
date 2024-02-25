@@ -20,12 +20,13 @@
 ###########################################################################
 
 
-MESSAGE ("############################################################")
-MESSAGE ("Makefile generation complete!\n")
-MESSAGE ("Compile by typing 'make -j <number of threads>'.\n")
-MESSAGE ("Install into <top-path>/<path> by typing 'make install'.")
-MESSAGE ("  where <top-path> = ${CMAKE_INSTALL_PREFIX}\n")
-MESSAGE ("Test the program(s) by typing 'make test'.")
-MESSAGE ("############################################################")
-
+if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
+  message ("############################################################")
+  message ("Makefile generation complete!\n")
+  message ("Compile by typing 'make -j <number of threads>'.\n")
+  message ("Install into <top-path>/<path> by typing 'make install'.")
+  message ("  where <top-path> = ${CMAKE_INSTALL_PREFIX}\n")
+  message ("Test the program(s) by typing 'make test'.")
+  message ("############################################################")
+endif ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
 

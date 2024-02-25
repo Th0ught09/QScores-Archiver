@@ -65,11 +65,10 @@ IF (NOT DEFINED MAIN_SRC_PATH)
   SET (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/..")
 
   ##  Locate where the shared CMake modules are
-  SET (CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/aux")
+  SET (CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
 ENDIF (NOT DEFINED MAIN_SRC_PATH)
 
 ##  Include externally defined functions
-INCLUDE (policies)
 INCLUDE (global)
 
 
@@ -79,12 +78,9 @@ INCLUDE (global)
 ##  Project name
 PROJECT (${CURR_PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
 ENABLE_LANGUAGE (C)
-MESSAGE (STATUS "Setting up ${CURR_PROJECT_NAME}, version ${PROJECT_VERSION}...")
+MESSAGE (STATUS "Setting up ${PROJECT_NAME}, version ${PROJECT_VERSION}...")
 
-##  Check if this is the top-level project
-IF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
-  INCLUDE (initial-msg)
-ENDIF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
+include (initial-msg)
 
 
 ########################################
@@ -163,12 +159,8 @@ INCLUDE (doxygen)
 
 
 ########################################
-##  Final message
-
-##  Check if this is the top-level project
-IF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
-  INCLUDE (final-msg)
-ENDIF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
+##  Show final message
+include (final-msg)
 
 
 ############################################################

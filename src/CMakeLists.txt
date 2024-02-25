@@ -26,7 +26,15 @@ cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
 ##  Set policy CMP0144 to "new" (Run "cmake --help-policy CMP0144" for details.)
 cmake_policy (SET CMP0144 NEW)
 
-PROJECT ("${PROJECT_NAME}")
+
+########################################
+##  Define the project name and C++ standard
+
+set (CURR_PROJECT_NAME "QScores-Archiver")
+
+set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_EXTENSIONS OFF)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 ########################################
@@ -37,22 +45,20 @@ IF (NOT DEFINED MAIN_SRC_PATH)
   SET (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
 
   ##  Locate where the shared CMake modules are
-  SET (CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/aux")
+  SET (CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
 ENDIF (NOT DEFINED MAIN_SRC_PATH)
 
 ##  Include externally defined functions
-INCLUDE (policies)
 INCLUDE (global)
 INCLUDE (add_subdirectory_once)
 
 
 ########################################
 ##  Set up the software
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores-Archiver" LANGUAGES CXX)
+message (STATUS "Setting up ${CMAKE_PROJECT_NAME}...")
 
-##  Check if this is the top-level project
-IF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
-  INCLUDE (initial-msg)
-ENDIF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
+include (initial-msg)
 
 
 ########################################
@@ -83,12 +89,8 @@ SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
 
 
 ########################################
-##  Final message
-
-##  Check if this is the top-level project
-IF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
-  INCLUDE (final-msg)
-ENDIF ("${CMAKE_PROJECT_NAME}" STREQUAL "${PROJECT_NAME}")
+##  Show final message
+include (final-msg)
 
 
 ############################################################
