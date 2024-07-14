@@ -20,28 +20,14 @@
 ###########################################################################
 
 
-##  Add a target to generate Doxygen documentation
-option (BUILD_DOCS "Create and install the HTML based API documentation (requires Doxygen)" OFF)
-if (BUILD_DOCS)
-  find_package (Doxygen REQUIRED dot OPTIONAL_COMPONENTS dia)
+##  Testing compilation flags, some of which are suggested by the Valgrind 3.3 book
+set (MY_CXX_FLAGS "-pedantic -Wno-long-long -g -fno-inline -O0 -Wall")
 
-  message (STATUS "II\tDoxygen version ${DOXYGEN_VERSION} has been found!")
+##  Release compilation flags, suggested by the Valgrind 3.3 book
+##  Added the following because of warnings in Boost 1.59.0:
+##    -Wno-unused-variable
+##    -Wno-unused-but-set-variable
+# set (MY_CXX_FLAGS "-O3 -Wall -Wno-unused-variable -Wno-unused-but-set-variable")
 
-  set (DOXYGEN_GENERATE_HTML          YES)
-  set (DOXYGEN_HAVE_DOT               YES)
-
-  ##  Variables used here
-  set (DOXYFILE_IN ${MAIN_SRC_PATH}/common/Doxyfile.in)
-  set (DOXYFILE_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-  configure_file (${DOXYFILE_IN} ${DOXYFILE_OUT} @ONLY)
-
-  doxygen_add_docs (${PROJECT_NAME}-doc
-                    ALL
-                    COMMENT "Generating API documentation with Doxygen"
-                    CONFIG_FILE ${DOXYFILE_OUT})
-
-  file (MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/doc/${TARGET_NAME_LIB}/")
-endif ()
-
-
+##  Set compiler flags based on global variable (if there are any)
+set (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")

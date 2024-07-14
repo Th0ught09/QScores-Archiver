@@ -19,29 +19,15 @@
 ##  <http://www.gnu.org/licenses/>.
 ###########################################################################
 
+##  Note that this module must be included *before* generation of the
+##    configuration file
 
-##  Add a target to generate Doxygen documentation
-option (BUILD_DOCS "Create and install the HTML based API documentation (requires Doxygen)" OFF)
-if (BUILD_DOCS)
-  find_package (Doxygen REQUIRED dot OPTIONAL_COMPONENTS dia)
-
-  message (STATUS "II\tDoxygen version ${DOXYGEN_VERSION} has been found!")
-
-  set (DOXYGEN_GENERATE_HTML          YES)
-  set (DOXYGEN_HAVE_DOT               YES)
-
-  ##  Variables used here
-  set (DOXYFILE_IN ${MAIN_SRC_PATH}/common/Doxyfile.in)
-  set (DOXYFILE_OUT ${CMAKE_CURRENT_BINARY_DIR}/Doxyfile)
-
-  configure_file (${DOXYFILE_IN} ${DOXYFILE_OUT} @ONLY)
-
-  doxygen_add_docs (${PROJECT_NAME}-doc
-                    ALL
-                    COMMENT "Generating API documentation with Doxygen"
-                    CONFIG_FILE ${DOXYFILE_OUT})
-
-  file (MAKE_DIRECTORY "${CMAKE_BINARY_DIR}/doc/${TARGET_NAME_LIB}/")
+##  Obtain the software version
+if (EXISTS "${MAIN_SRC_PATH}/common/VERSION")
+  file (READ "${MAIN_SRC_PATH}/common/VERSION" PROGRAM_VERSION)
+  string (STRIP "${PROGRAM_VERSION}" PROGRAM_VERSION)
+else ()
+  message (FATAL_ERROR "File ${MAIN_SRC_PATH}/common/VERSION not found")
 endif ()
 
 

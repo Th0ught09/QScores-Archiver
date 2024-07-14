@@ -19,20 +19,24 @@
 ##  <http://www.gnu.org/licenses/>.
 ###########################################################################
 
+##  Note that this module must be included *before* generation of the
+##    configuration file
 
-##  Software versions
-SET (GLOBAL_VERSION_MAJOR 1)
-SET (GLOBAL_VERSION_MINOR 00)
+##  Default value if it has not been defined
+set (GIT_HASH "Unknown")
 
-SET (QSCORES_VERSION_MAJOR 1)
-SET (QSCORES_VERSION_MINOR 00)
+##  Check that git exists
+find_package (Git QUIET)
 
+if (GIT_FOUND)
+  execute_process (
+    COMMAND ${GIT_EXECUTABLE} log -1 --pretty=format:%h
+    OUTPUT_VARIABLE GIT_HASH
+    OUTPUT_STRIP_TRAILING_WHITESPACE
+    ERROR_QUIET
+    WORKING_DIRECTORY
+      ${CMAKE_CURRENT_SOURCE_DIR}
+    )
+endif ()
 
-##  Testing compilation flags, some of which are suggested by the Valgrind 3.3 book
-# SET (MY_CXX_FLAGS "-pedantic -Wno-long-long -g -fno-inline -O0 -Wall")
-##  Release compilation flags, suggested by the Valgrind 3.3 book
-##  Added the following because of warnings in Boost 1.59.0:
-##    -Wno-unused-variable
-##    -Wno-unused-but-set-variable
-SET (MY_CXX_FLAGS "-O3 -Wall -Wno-unused-variable -Wno-unused-but-set-variable")
-
+message (STATUS "Git hash is ${GIT_HASH}")
