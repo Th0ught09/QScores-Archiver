@@ -38,7 +38,7 @@
 using namespace std;
 
 #include "common.hpp"
-#include "BitBufferConfig.hpp"
+#include "BitBuffer_Config.hpp"
 #include "bitbuffer.hpp"
 #include "testing.hpp"
 
