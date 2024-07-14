@@ -44,7 +44,7 @@ using namespace std;
 namespace bfs = boost::filesystem;
 
 //  Pull the configuration file in
-#include "BitIOConfig.hpp"
+#include "BitIO_Config.hpp"
 
 #include "test_sequential.hpp"
 #include "test_random.hpp"
@@ -62,7 +62,8 @@ void ShowInfo () {
   cout << sizeof (unsigned long long int) << endl;
   cout << sizeof (double) << endl;
 
-  cout << "BitIO version " << BitIO_VERSION_MAJOR << "." << BitIO_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Storage version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Git hash:  " << GIT_HASH << endl;
 
   cerr << "==\tShowInfo successful!" << endl;
 
@@ -118,7 +119,8 @@ bool ProcessOptions (int argc, char *argv[]) {
     store (po::command_line_parser (argc, argv).options (cmdline_options).run (), vm);
 
     if (vm.count ("version")) {
-      cout << "BitIO Test version " << BitIO_VERSION_MAJOR << "." << BitIO_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+      cout << "Storage version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+      cout << "Git hash:  " << GIT_HASH << endl;
       return false;
     }
 

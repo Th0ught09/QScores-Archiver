@@ -38,7 +38,7 @@
 
 using namespace std;
 
-#include "BitIOConfig.hpp"
+#include "BitIO_Config.hpp"
 #include "bitbuffer.hpp"
 #include "bitio-defn.hpp"
 #include "math_utils.hpp"

@@ -22,11 +22,25 @@
 
 /*******************************************************************/
 /*!
-    \file BitIOConfig.hpp[.in]
+    \file BitIO_Config.hpp[.in]
     BitIO configuration file.
 */
 /*******************************************************************/
 
-//  Version information for BitIO
-#define BitIO_VERSION_MAJOR @BitIO_VERSION_MAJOR@
-#define BitIO_VERSION_MINOR @BitIO_VERSION_MINOR@
+
+#ifndef BITIO_CONFIG_HPP_IN
+#define BITIO_CONFIG_HPP_IN
+
+//!  Externally define the program version
+const std::string PROGRAM_VERSION = "@PROGRAM_VERSION@";
+
+//!  Externally defined Git hash
+const std::string GIT_HASH = "@GIT_HASH@";
+
+//!  Set if OpenMP exists
+#cmakedefine01 HAVE_OPENMP
+
+//!  Set if MPI exists
+#cmakedefine01 HAVE_MPI
+
+#endif
