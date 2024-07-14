@@ -38,54 +38,33 @@ set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 
 ########################################
-##  Set the main source path to the very top
+##  Set the global path
 
-##  Set the main path and where additional CMake modules are
-IF (NOT DEFINED MAIN_SRC_PATH)
-  SET (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}")
+##  If the MAIN_SRC_PATH has not been defined yet
+if (NOT DEFINED MAIN_SRC_PATH)
+  ##  Set the main source path to the very top
+  set (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/")
 
   ##  Locate where the shared CMake modules are
-  SET (CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
-ENDIF (NOT DEFINED MAIN_SRC_PATH)
+  list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
+endif ()
 
-##  Include externally defined functions
-INCLUDE (global)
-INCLUDE (add_subdirectory_once)
+##  Include externally defined modules
+include (add_subdirectory_once)
 
 
 ########################################
 ##  Set up the software
-project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores-Archiver" LANGUAGES CXX)
-message (STATUS "Setting up ${CMAKE_PROJECT_NAME}...")
-
 include (initial-msg)
 
-
-########################################
-##  Create the targets
-
-##  Set the output directory of the libraries to the top-level binary directory
-SET (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores-Archiver" LANGUAGES CXX)
+message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
 
 
 ########################################
-##  Add dependencies and directories
+##  Add subdirectories to process
 
-##  Location of configuration files
-INCLUDE_DIRECTORIES (${TARGET_NAME_EXEC} PUBLIC "${PROJECT_BINARY_DIR}")
-
-##  Location of additional header files
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/qscores)
-
-##  Location of module dependencies
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/qscores ${CMAKE_BINARY_DIR}/qscores)
-
-
-########################################
-##  Set initial compilation flags
-
-##  Set compiler flags based on global variable
-SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
+add_subdirectory_once (qscores)
 
 
 ########################################
@@ -93,9 +72,9 @@ SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
 include (final-msg)
 
 
-############################################################
+########################################
 ##  CTest
-############################################################
 
-ENABLE_TESTING ()
+enable_testing ()
+
 

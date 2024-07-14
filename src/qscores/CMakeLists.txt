@@ -28,12 +28,31 @@ cmake_policy (SET CMP0144 NEW)
 
 
 ########################################
-##  Variables specific to this project
-SET (TARGET_NAME_EXEC "qscores")
-SET (CURR_PROJECT_NAME "QScores")
+##  Define the project name and target(s)
 
-##  Source files for both the test executable and library
-SET (SRC_FILES
+set (CURR_PROJECT_NAME "QScores")
+set (TARGET_NAME_EXEC "qscores")
+
+add_executable (${TARGET_NAME_EXEC} "")
+
+
+########################################
+##  Set the C++ standard
+
+set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_EXTENSIONS OFF)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+
+##  Use target_compile_features () for macOS
+target_compile_features (${TARGET_NAME_LIB} PUBLIC cxx_std_11)
+target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_11)
+
+
+########################################
+##  Define the source files
+
+##  Source files for the main program and library
+set (CPP_FILES
   accessors.cpp
   binning.cpp
   decode.cpp
@@ -47,48 +66,68 @@ SET (SRC_FILES
   transform.cpp
 )
 
-##  Source files for just the text executable
-SET (TEST_FILES
+##  Source files for just the main program
+set (EXE_CPP_FILES
   main.cpp
 )
 
-##  Header files that are included by other libraries / programs
-SET (HEADER_FILES
+##  Header files for the main program and library
+set (HPP_FILES
+)
+
+##  Header files for just the main program
+set (EXE_HPP_FILES
 )
 
 
 ########################################
-##  Set the main source path to the very top
+##  Set the global path
 
-##  Set the main path and where additional CMake modules are
-IF (NOT DEFINED MAIN_SRC_PATH)
-  SET (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/..")
+##  If the MAIN_SRC_PATH has not been defined yet
+if (NOT DEFINED MAIN_SRC_PATH)
+  ##  Set the main source path to the very top
+  set (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/..")
 
   ##  Locate where the shared CMake modules are
-  SET (CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
-ENDIF (NOT DEFINED MAIN_SRC_PATH)
+  list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
+endif ()
 
-##  Include externally defined functions
-INCLUDE (global)
-INCLUDE (add_subdirectory_once)
+##  Include externally defined modules
+include (add_subdirectory_once)
 
 
 ########################################
 ##  Set up the software
-
-##  Project name
-PROJECT (${CURR_PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
-ENABLE_LANGUAGE (C)
-MESSAGE (STATUS "Setting up ${PROJECT_NAME}, version ${PROJECT_VERSION}...")
-
 include (initial-msg)
+
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores" LANGUAGES CXX)
+message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
+
+
+########################################
+##  Set initial compilation flags
+
+include (compile-flags)
+
+
+########################################
+##  Obtain the Git hash and version
+
+include (git-hash)
+include (version)
+
+
+########################################
+##  Set up for Boost
+
+include (boost)
 
 
 ########################################
 ##  Detect zlib, and bzlib2 -- must be before the creation of the configuration file
 
-FIND_PACKAGE (ZLIB)
-FIND_PACKAGE (BZip2)
+find_package (ZLIB)
+find_package (BZip2)
 
 
 ########################################
@@ -96,25 +135,39 @@ FIND_PACKAGE (BZip2)
 
 ##  Configure a header file to pass some of the CMake settings
 ##  to the source code.
-##  
+##
 ##  The output header file is placed at the top-level binary directory.
-CONFIGURE_FILE (
-  "${PROJECT_SOURCE_DIR}/${CURR_PROJECT_NAME}Config.hpp.in"
-  "${PROJECT_BINARY_DIR}/${CURR_PROJECT_NAME}Config.hpp"
+configure_file (
+  "${CMAKE_CURRENT_SOURCE_DIR}/${CURR_PROJECT_NAME}_Config.hpp.in"
+  "${CMAKE_BINARY_DIR}/generated/${CURR_PROJECT_NAME}_Config.hpp"
   @ONLY
 )
 
+##  Include the generated/ directory so that the created configuration
+##    file can be located
+include_directories (${CMAKE_BINARY_DIR}/generated)
+
 
 ########################################
-##  Create the targets
+##  Update the targets
 
-##  Set the output directory of the libraries to the top-level binary directory
-SET (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
+##  Update an executable
+if (TARGET ${TARGET_NAME_EXEC})
+  ##  Add sources to the target
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${CPP_FILES})
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${EXE_CPP_FILES})
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${HPP_FILES})
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${EXE_HPP_FILES})
 
-##  Create the executable
-IF (NOT TARGET ${TARGET_NAME_EXEC})
-  ADD_EXECUTABLE (${TARGET_NAME_EXEC} ${TEST_FILES} ${SRC_FILES})
-  TARGET_LINK_LIBRARIES (${TARGET_NAME_EXEC} 
+  ##  Rename the executable
+  set_property (TARGET genomicfeatures_exe PROPERTY OUTPUT_NAME genomicfeatures)
+
+  if (Boost_FOUND)
+    target_include_directories (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")
+    target_link_libraries (${TARGET_NAME_EXEC} ${Boost_LIBRARIES})
+  endif ()
+
+  target_link_libraries (${TARGET_NAME_EXEC}
     qscores-settings 
     qscores-single 
     bitio 
@@ -123,50 +176,56 @@ IF (NOT TARGET ${TARGET_NAME_EXEC})
     huffman 
     external-software 
     block-statistics 
-    ${Boost_LIBRARIES})
-  INSTALL (TARGETS ${TARGET_NAME_EXEC} DESTINATION bin)
-ENDIF (NOT TARGET ${TARGET_NAME_EXEC})
+    ${Boost_LIBRARIES}
+  )
+
+  install (TARGETS ${TARGET_NAME_EXEC} DESTINATION bin)
+endif ()
+
+##  Set the output directory of the libraries to the top-level binary directory
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
 ########################################
 ##  Add dependencies and directories
 
 ##  Location of configuration files
-INCLUDE_DIRECTORIES (${TARGET_NAME_EXEC} PUBLIC "${PROJECT_BINARY_DIR}")
+# INCLUDE_DIRECTORIES (${TARGET_NAME_EXEC} PUBLIC "${PROJECT_BINARY_DIR}")
 
 ##  Location of additional header files
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/common)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/block-statistics)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/bitbuffer)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/bitio)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/huffman)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/interpolative)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/qscores-single)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/qscores-settings)
-INCLUDE_DIRECTORIES (${MAIN_SRC_PATH}/external-software)
+include_directories (
+  ${MAIN_SRC_PATH}/common
+  ${MAIN_SRC_PATH}/block-statistics
+  ${MAIN_SRC_PATH}/bitbuffer
+  ${MAIN_SRC_PATH}/biotio
+  ${MAIN_SRC_PATH}/huffman
+  ${MAIN_SRC_PATH}/interpolative
+  ${MAIN_SRC_PATH}/qscores-single
+  ${MAIN_SRC_PATH}/qscores-settings
+  ${MAIN_SRC_PATH}/external-software
+)
 
 ##  Location of module dependencies
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/external-software ${CMAKE_BINARY_DIR}/external-software)
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/block-statistics ${CMAKE_BINARY_DIR}/block-statistics)
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/bitbuffer ${CMAKE_BINARY_DIR}/bitbuffer)
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/bitio ${CMAKE_BINARY_DIR}/bitio)
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/huffman ${CMAKE_BINARY_DIR}/huffman)
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/interpolative ${CMAKE_BINARY_DIR}/interpolative)
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/qscores-single ${CMAKE_BINARY_DIR}/qscores-single)
-ADD_SUBDIRECTORY_ONCE (${MAIN_SRC_PATH}/qscores-settings ${CMAKE_BINARY_DIR}/qscores-settings)
+add_subdirectory_once (${MAIN_SRC_PATH}/external-software ${CMAKE_BINARY_DIR}/external-software)
+add_subdirectory_once (${MAIN_SRC_PATH}/block-statistics ${CMAKE_BINARY_DIR}/block-statistics)
+add_subdirectory_once (${MAIN_SRC_PATH}/bitbuffer ${CMAKE_BINARY_DIR}/bitbuffer)
+add_subdirectory_once (${MAIN_SRC_PATH}/bitio ${CMAKE_BINARY_DIR}/bitio)
+add_subdirectory_once (${MAIN_SRC_PATH}/huffman ${CMAKE_BINARY_DIR}/huffman)
+add_subdirectory_once (${MAIN_SRC_PATH}/interpolative ${CMAKE_BINARY_DIR}/interpolative)
+add_subdirectory_once (${MAIN_SRC_PATH}/qscores-single ${CMAKE_BINARY_DIR}/qscores-single)
+add_subdirectory_once (${MAIN_SRC_PATH}/qscores-settings ${CMAKE_BINARY_DIR}/qscores-settings)
 
 
 ########################################
-##  Set initial compilation flags
+##  Documentation
 
-##  Set compiler flags based on global variable
-SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
+include (doxygen)
 
 
 ########################################
-##  Set up for Boost
+##  Show final message
 
-INCLUDE (boost)
+include (final-msg)
 
 
 ########################################
@@ -176,19 +235,7 @@ INCLUDE (post-compress)
 
 
 ########################################
-##  Documentation
+##  Testing
 
-INCLUDE (doxygen)
-
-
-########################################
-##  Show final message
-include (final-msg)
-
-
-############################################################
-##  CTest
-############################################################
-
-ENABLE_TESTING ()
+enable_testing ()
 
