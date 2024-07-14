@@ -28,76 +28,143 @@ cmake_policy (SET CMP0144 NEW)
 
 
 ########################################
-##  Variables specific to this project
-SET (TARGET_NAME "common")
-SET (TARGET_NAME_EXEC "common-test")
-SET (CURR_PROJECT_NAME "Common")
+##  Define the project name and target(s)
+
+set (CURR_PROJECT_NAME "Common")
+set (TARGET_NAME_LIB "common")
+set (TARGET_NAME_EXEC "common_exe")
+
+add_executable (${TARGET_NAME_EXEC} "")
+
+
+########################################
+##  Set the C++ standard
+
+set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_EXTENSIONS OFF)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+
+##  Use target_compile_features () for macOS
+target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_11)
+
+
+########################################
+##  Set the C++ standard
+
+set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_EXTENSIONS OFF)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+
+##  Use target_compile_features () for macOS
+target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_11)
+
+
+########################################
+##  Define the source files
+
+##  Source files for both the test executable and library
+set (CPP_FILES
+)
 
 ##  Source files for just the text executable
-SET (TEST_FILES
+set (EXE_CPP_FILES
   main.cpp
 )
 
-##  Header files
-SET (HEADER_FILES
+##  Header files for the main program and library
+set (HPP_FILES
+)
+
+##  Header files for just the main program
+set (EXE_HPP_FILES
 )
 
 
 ########################################
-##  Set the main source path to the very top
+##  Set the global path
 
-##  Set the main path and where additional CMake modules are
-IF (NOT DEFINED MAIN_SRC_PATH)
-  SET (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/..")
+##  If the MAIN_SRC_PATH has not been defined yet
+if (NOT DEFINED MAIN_SRC_PATH)
+  ##  Set the main source path to the very top
+  set (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/..")
 
   ##  Locate where the shared CMake modules are
-  SET (CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
-ENDIF (NOT DEFINED MAIN_SRC_PATH)
+  list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
+endif ()
 
-##  Include externally defined functions
-INCLUDE (global)
+##  Include externally defined modules
+include (add_subdirectory_once)
 
 
 ########################################
 ##  Set up the software
 
-##  Project name
-PROJECT (${CURR_PROJECT_NAME} VERSION 1.0 LANGUAGES CXX)
-MESSAGE (STATUS "Setting up ${PROJECT_NAME}, version ${PROJECT_VERSION}...")
-
 include (initial-msg)
 
-
-########################################
-##  Create the targets
-
-##  Create the test executable
-ADD_EXECUTABLE (${TARGET_NAME_EXEC} ${TEST_FILES})
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "BitBuffer" LANGUAGES CXX)
+message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
 
 
 ########################################
 ##  Set initial compilation flags
 
-##  Set compiler flags based on global variable
-SET (CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} ${MY_CXX_FLAGS}")
+include (compile-flags)
+
+
+########################################
+##  Obtain the Git hash and version
+
+include (git-hash)
+include (version)
+
+
+########################################
+##  Update the targets
+
+##  Update an executable
+if (TARGET ${TARGET_NAME_EXEC})
+  ##  Add sources to the target
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${CPP_FILES})
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${EXE_CPP_FILES})
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${HPP_FILES})
+  target_sources (${TARGET_NAME_EXEC} PRIVATE ${EXE_HPP_FILES})
+
+  ##  Rename the executable
+  set_property (TARGET common_exe PROPERTY OUTPUT_NAME common)
+
+  install (TARGETS ${TARGET_NAME_EXEC} DESTINATION bin)
+endif ()
+
+
+##  Update a library
+if (TARGET ${TARGET_NAME_LIB})
+  ##  Add sources to the target
+  target_sources (${TARGET_NAME_LIB} PRIVATE ${CPP_FILES})
+  target_sources (${TARGET_NAME_LIB} PRIVATE ${HPP_FILES})
+
+  install (TARGETS ${TARGET_NAME_LIB} DESTINATION lib)
+endif ()
+
+##  Set the output directory of the libraries to the top-level binary directory
+set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 
 
 ########################################
 ##  Documentation
 
-INCLUDE (doxygen)
+include (doxygen)
 
 
 ########################################
 ##  Show final message
+
 include (final-msg)
 
 
-############################################################
-##  CTest
-############################################################
+########################################
+##  Testing
 
-ENABLE_TESTING ()
-ADD_TEST (NAME Common-Architecture COMMAND ${TARGET_NAME_EXEC})
+enable_testing ()
+add_test (NAME Common-Architecture COMMAND ${TARGET_NAME_EXEC})
 
 
