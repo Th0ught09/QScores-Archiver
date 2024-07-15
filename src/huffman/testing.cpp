@@ -34,7 +34,7 @@
 
 using namespace std;
 
-#include "HuffmanConfig.hpp"
+#include "Huffman_Config.hpp"
 #include "common.hpp"
 #include "bitbuffer.hpp"
 #include "huffman.hpp"
@@ -68,7 +68,9 @@ bool VectorSame (vector<unsigned int> x, vector<unsigned int> y) {
      \return Always returns true
 */
 bool ShowInfo () {
-  cout << "Huffman version " << Huffman_VERSION_MAJOR << "." << Huffman_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Huffman version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Git hash:  " << GIT_HASH << endl;
+
   cout << "II\tShowInfo successful!" << endl;
 
   return (true);

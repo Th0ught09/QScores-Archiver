@@ -22,12 +22,25 @@
 
 /*******************************************************************/
 /*!
-    \file HuffmanConfig.hpp[.in]
+    \file Huffman_Config.hpp[.in]
     Huffman configuration file.
 */
 /*******************************************************************/
 
-//  Version information for Huffman
-#define Huffman_VERSION_MAJOR @Huffman_VERSION_MAJOR@
-#define Huffman_VERSION_MINOR @Huffman_VERSION_MINOR@
+#ifndef HUFFMAN_CONFIG_HPP_IN
+#define HUFFMAN_CONFIG_HPP_IN
+
+//!  Externally define the program version
+const std::string PROGRAM_VERSION = "@PROGRAM_VERSION@";
+
+//!  Externally defined Git hash
+const std::string GIT_HASH = "@GIT_HASH@";
+
+//!  Set if OpenMP exists
+#cmakedefine01 HAVE_OPENMP
+
+//!  Set if MPI exists
+#cmakedefine01 HAVE_MPI
+
+#endif
 
