@@ -68,8 +68,8 @@ bool VectorSame (vector<unsigned int> x, vector<unsigned int> y) {
      \return Always returns true
 */
 bool ShowInfo () {
-  cout << "Huffman version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-  cout << "Git hash:  " << GIT_HASH << endl;
+  cout << "Huffman version " << HUFFMAN_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Git hash:  " << HUFFMAN_GIT_HASH << endl;
 
   cout << "II\tShowInfo successful!" << endl;
 

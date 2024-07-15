@@ -52,8 +52,8 @@ using namespace std;
      \return Always returns true
 */
 bool ShowInfo () {
-  cout << "Interpolative coding version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-  cout << "Git hash:  " << GIT_HASH << endl;
+  cout << "Interpolative coding version " << INTERPOLATIVE_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Git hash:  " << INTERPOLATIVE_GIT_HASH << endl;
 
   cout << "II\tShowInfo successful!" << endl;
 

@@ -39,7 +39,7 @@ using namespace boost;
 namespace po = boost::program_options;
 
 //  Pull the configuration file in
-#include "QScoresConfig.hpp"
+#include "QScores_Config.hpp"
 
 #if ZLIB_FOUND
 #include "zlib.h"
@@ -172,7 +172,9 @@ bool QScores::ProcessOptions (int argc, char *argv[]) {
     //  Program options and handle the configuration file
     //  -----------------------------------------------------------------
     if (vm.count ("version")) {
-      cout << "QScores version " << QScores_VERSION_MAJOR << "." << QScores_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+      cout << "QScores version " << QSCORES_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+      cout << "Git hash:  " << QSCORES_GIT_HASH << endl;
+
       return false;
     }
 

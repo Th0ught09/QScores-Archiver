@@ -37,7 +37,7 @@
 using namespace std;
 
 //  Pull the configuration file in
-#include "QScoresConfig.hpp"
+#include "QScores_Config.hpp"
 
 #if ZLIB_FOUND
 #include "zlib.h"

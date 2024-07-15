@@ -61,8 +61,8 @@ int main(int argc, char **argv) {
   if (strcmp (argv[1], "1") == 0) {
     cout << qscores_settings << endl;
 
-    cout << "QScoresSettings coding version " << PROGRAM_VERSION << " compiled on:   " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-    cout << "Git hash:  " << GIT_HASH << endl;
+    cout << "QScoresSettings coding version " << QSCORESSETTINGS_PROGRAM_VERSION << " compiled on:   " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << QSCORESSETTINGS_GIT_HASH << endl;
   }
   else if (strcmp (argv[1], "2") == 0) {
     bool result = qscores_settings.SetQScoresMapping ("sanger");
@@ -81,8 +81,8 @@ int main(int argc, char **argv) {
 
     cout << qscores_settings << endl;
 
-    cout << "QScoresSettings coding version " << PROGRAM_VERSION << " compiled on:   " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-    cout << "Git hash:  " << GIT_HASH << endl;
+    cout << "QScoresSettings coding version " << QSCORESSETTINGS_PROGRAM_VERSION << " compiled on:   " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << QSCORESSETTINGS_GIT_HASH << endl;
   }
 
   return (EXIT_SUCCESS);

@@ -64,10 +64,10 @@ int ShowInfo () {
   cout << sizeof (unsigned long long int) << endl;
   cout << sizeof (double) << endl;
 
-  cout << "Hello, world!" << endl;
-  cout << "BitBuffer Version:  " << BitBuffer_VERSION_MAJOR << "." << BitBuffer_VERSION_MINOR << endl;
+  cout << "BitBuffer version " << BITBUFFER_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Git hash:  " << BITBUFFER_GIT_HASH << endl;
 
-  cerr << "==\tShowInfo successful!" << endl;
+  cout << "==\tShowInfo successful!" << endl;
   return (EXIT_SUCCESS);
 }
 

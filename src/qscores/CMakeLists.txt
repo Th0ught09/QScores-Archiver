@@ -31,7 +31,7 @@ cmake_policy (SET CMP0144 NEW)
 ##  Define the project name and target(s)
 
 set (CURR_PROJECT_NAME "QScores")
-set (TARGET_NAME_EXEC "qscores")
+set (TARGET_NAME_EXEC "qscores_exe")
 
 add_executable (${TARGET_NAME_EXEC} "")
 
@@ -44,7 +44,6 @@ set (CMAKE_CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ##  Use target_compile_features () for macOS
-target_compile_features (${TARGET_NAME_LIB} PUBLIC cxx_std_11)
 target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_11)
 
 
@@ -160,24 +159,21 @@ if (TARGET ${TARGET_NAME_EXEC})
   target_sources (${TARGET_NAME_EXEC} PRIVATE ${EXE_HPP_FILES})
 
   ##  Rename the executable
-  set_property (TARGET genomicfeatures_exe PROPERTY OUTPUT_NAME genomicfeatures)
+  set_property (TARGET qscores_exe PROPERTY OUTPUT_NAME qscores)
 
   if (Boost_FOUND)
     target_include_directories (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")
     target_link_libraries (${TARGET_NAME_EXEC} ${Boost_LIBRARIES})
   endif ()
 
-  target_link_libraries (${TARGET_NAME_EXEC}
-    qscores-settings 
-    qscores-single 
-    bitio 
-    bitbuffer 
-    interpolative 
-    huffman 
-    external-software 
-    block-statistics 
-    ${Boost_LIBRARIES}
-  )
+  target_link_libraries (${TARGET_NAME_EXEC} bitbuffer)
+  target_link_libraries (${TARGET_NAME_EXEC} bitio)
+  target_link_libraries (${TARGET_NAME_EXEC} interpolative)
+  target_link_libraries (${TARGET_NAME_EXEC} huffman)
+  target_link_libraries (${TARGET_NAME_EXEC} block-statistics)
+  target_link_libraries (${TARGET_NAME_EXEC} qscores-single)
+  target_link_libraries (${TARGET_NAME_EXEC} qscores-settings)
+  target_link_libraries (${TARGET_NAME_EXEC} external-software)
 
   install (TARGETS ${TARGET_NAME_EXEC} DESTINATION bin)
 endif ()
@@ -189,31 +185,26 @@ set (CMAKE_LIBRARY_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR})
 ########################################
 ##  Add dependencies and directories
 
-##  Location of configuration files
-# INCLUDE_DIRECTORIES (${TARGET_NAME_EXEC} PUBLIC "${PROJECT_BINARY_DIR}")
-
 ##  Location of additional header files
-include_directories (
-  ${MAIN_SRC_PATH}/common
-  ${MAIN_SRC_PATH}/block-statistics
-  ${MAIN_SRC_PATH}/bitbuffer
-  ${MAIN_SRC_PATH}/biotio
-  ${MAIN_SRC_PATH}/huffman
-  ${MAIN_SRC_PATH}/interpolative
-  ${MAIN_SRC_PATH}/qscores-single
-  ${MAIN_SRC_PATH}/qscores-settings
-  ${MAIN_SRC_PATH}/external-software
-)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/common)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/bitbuffer)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/bitio)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/interpolative)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/huffman)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/block-statistics)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/qscores-single)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/qscores-settings)
+target_include_directories (${TARGET_NAME_EXEC} PUBLIC ${MAIN_SRC_PATH}/external-software)
 
 ##  Location of module dependencies
-add_subdirectory_once (${MAIN_SRC_PATH}/external-software ${CMAKE_BINARY_DIR}/external-software)
-add_subdirectory_once (${MAIN_SRC_PATH}/block-statistics ${CMAKE_BINARY_DIR}/block-statistics)
-add_subdirectory_once (${MAIN_SRC_PATH}/bitbuffer ${CMAKE_BINARY_DIR}/bitbuffer)
-add_subdirectory_once (${MAIN_SRC_PATH}/bitio ${CMAKE_BINARY_DIR}/bitio)
-add_subdirectory_once (${MAIN_SRC_PATH}/huffman ${CMAKE_BINARY_DIR}/huffman)
-add_subdirectory_once (${MAIN_SRC_PATH}/interpolative ${CMAKE_BINARY_DIR}/interpolative)
-add_subdirectory_once (${MAIN_SRC_PATH}/qscores-single ${CMAKE_BINARY_DIR}/qscores-single)
-add_subdirectory_once (${MAIN_SRC_PATH}/qscores-settings ${CMAKE_BINARY_DIR}/qscores-settings)
+add_subdirectory_once (${MAIN_SRC_PATH}/bitbuffer ${CMAKE_CURRENT_BINARY_DIR}/bitbuffer)
+add_subdirectory_once (${MAIN_SRC_PATH}/bitio ${CMAKE_CURRENT_BINARY_DIR}/bitio)
+add_subdirectory_once (${MAIN_SRC_PATH}/interpolative ${CMAKE_CURRENT_BINARY_DIR}/interpolative)
+add_subdirectory_once (${MAIN_SRC_PATH}/huffman ${CMAKE_CURRENT_BINARY_DIR}/huffman)
+add_subdirectory_once (${MAIN_SRC_PATH}/block-statistics ${CMAKE_CURRENT_BINARY_DIR}/block-statistics)
+add_subdirectory_once (${MAIN_SRC_PATH}/qscores-single ${CMAKE_CURRENT_BINARY_DIR}/qscores-single)
+add_subdirectory_once (${MAIN_SRC_PATH}/qscores-settings ${CMAKE_CURRENT_BINARY_DIR}/qscores-settings)
+add_subdirectory_once (${MAIN_SRC_PATH}/external-software ${CMAKE_CURRENT_BINARY_DIR}/external-software)
 
 
 ########################################
@@ -231,7 +222,7 @@ include (final-msg)
 ########################################
 ##  Set various values based on libraries found
 
-INCLUDE (post-compress)
+include (post-compress)
 
 
 ########################################

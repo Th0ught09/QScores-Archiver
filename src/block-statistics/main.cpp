@@ -65,8 +65,8 @@ int main(int argc, char **argv) {
   }
 
   if (strcmp (argv[1], "1") == 0) {
-    cout << "BlockStatistics version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-    cout << "Git hash:  " << GIT_HASH << endl;
+    cout << "BlockStatistics version " << BLOCKSTATISTICS_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << BLOCKSTATISTICS_GIT_HASH << endl;
   }
   else if (strcmp (argv[1], "2") == 0) {
     bs.UpdateFrequencyTable (tmp);

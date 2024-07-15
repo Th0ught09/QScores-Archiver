@@ -79,8 +79,8 @@ int main(int argc, char **argv) {
   }
 
   if (strcmp (argv[1], "1") == 0) {
-    cout << "QScoresSingle version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-    cout << "Git hash:  " << GIT_HASH << endl;
+    cout << "QScoresSingle version " << QSCORESSINGLE_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << QSCORESSINGLE_GIT_HASH << endl;
 
     return (EXIT_SUCCESS);
   }

@@ -62,8 +62,8 @@ void ShowInfo () {
   cout << sizeof (unsigned long long int) << endl;
   cout << sizeof (double) << endl;
 
-  cout << "BioIO version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-  cout << "Git hash:  " << GIT_HASH << endl;
+  cout << "BioIO version " << BITIO_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "Git hash:  " << BITIO_GIT_HASH << endl;
 
   cout << "==\tShowInfo successful!" << endl;
 
@@ -119,8 +119,8 @@ bool ProcessOptions (int argc, char *argv[]) {
     store (po::command_line_parser (argc, argv).options (cmdline_options).run (), vm);
 
     if (vm.count ("version")) {
-      cout << "BitIO version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
-      cout << "Git hash:  " << GIT_HASH << endl;
+      cout << "BitIO version " << BITIO_PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+      cout << "Git hash:  " << BITIO_GIT_HASH << endl;
       return false;
     }
 

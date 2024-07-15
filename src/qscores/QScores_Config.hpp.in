@@ -22,15 +22,30 @@
 
 /*******************************************************************/
 /*!
-    \file QscoresConfig.hpp[.in]
+    \file Qscores_Config.hpp[.in]
     QScores configuration file.
 */
 /*******************************************************************/
 
-//  Version information for QScores
-#define QScores_VERSION_MAJOR @QScores_VERSION_MAJOR@
-#define QScores_VERSION_MINOR @QScores_VERSION_MINOR@
+#ifndef QSCORES_CONFIG_HPP_IN
+#define QSCORES_CONFIG_HPP_IN
 
-//  Set if OpenMP exists
-#cmakedefine HAVE_OPENMP 1
+//  Set if zlib library exists
+#cmakedefine ZLIB_FOUND 1
 
+//  Set if bzlib2 library exists
+#cmakedefine BZIP2_FOUND 1
+
+//!  Externally define the program version
+const std::string QSCORES_PROGRAM_VERSION = "@PROGRAM_VERSION@";
+
+//!  Externally defined Git hash
+const std::string QSCORES_GIT_HASH = "@GIT_HASH@";
+
+//!  Set if OpenMP exists
+#cmakedefine01 HAVE_OPENMP
+
+//!  Set if MPI exists
+#cmakedefine01 HAVE_MPI
+
+#endif

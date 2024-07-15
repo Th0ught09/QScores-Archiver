@@ -144,6 +144,11 @@ if (TARGET ${TARGET_NAME_EXEC})
   ##  Rename the executable
   set_property (TARGET interpolative_exe PROPERTY OUTPUT_NAME interpolative)
 
+  if (Boost_FOUND)
+    target_include_directories (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")
+    target_link_libraries (${TARGET_NAME_EXEC} ${Boost_LIBRARIES})
+  endif ()
+
   target_link_libraries (${TARGET_NAME_EXEC} bitbuffer)
   target_link_libraries (${TARGET_NAME_EXEC} bitio)
  
@@ -156,6 +161,11 @@ if (TARGET ${TARGET_NAME_LIB})
   ##  Add sources to the target
   target_sources (${TARGET_NAME_LIB} PRIVATE ${CPP_FILES})
   target_sources (${TARGET_NAME_LIB} PRIVATE ${HPP_FILES})
+
+  if (Boost_FOUND)
+    target_include_directories (${TARGET_NAME_LIB} PUBLIC "${Boost_INCLUDE_DIRS}")
+    target_link_libraries (${TARGET_NAME_LIB} ${Boost_LIBRARIES})
+  endif ()
 
   target_link_libraries (${TARGET_NAME_LIB} bitbuffer)
   target_link_libraries (${TARGET_NAME_LIB} bitio)

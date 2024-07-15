@@ -31,10 +31,10 @@
 #define INTERPOLATIVE_CONFIG_HPP_IN
 
 //!  Externally define the program version
-const std::string PROGRAM_VERSION = "@PROGRAM_VERSION@";
+const std::string INTERPOLATIVE_PROGRAM_VERSION = "@PROGRAM_VERSION@";
 
 //!  Externally defined Git hash
-const std::string GIT_HASH = "@GIT_HASH@";
+const std::string INTERPOLATIVE_GIT_HASH = "@GIT_HASH@";
 
 //!  Set if OpenMP exists
 #cmakedefine01 HAVE_OPENMP

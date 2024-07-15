@@ -20,16 +20,16 @@
 ###########################################################################
 
 
-IF (ZLIB_FOUND)
-  INCLUDE_DIRECTORIES (${ZLIB_INCLUDE_DIRS})
-  TARGET_LINK_LIBRARIES (${TARGET_NAME_EXEC} ${ZLIB_LIBRARIES})
-ENDIF (ZLIB_FOUND)
+if (ZLIB_FOUND)
+  include_directories (${ZLIB_INCLUDE_DIRS})
+  target_link_libraries (${TARGET_NAME_EXEC} ${ZLIB_LIBRARIES})
+endif (ZLIB_FOUND)
 
-IF (BZIP2_FOUND)
-  INCLUDE_DIRECTORIES (${BZIP2_INCLUDE_DIR})
-  TARGET_LINK_LIBRARIES (${TARGET_NAME_EXEC} ${BZIP2_LIBRARIES})
-  IF (NOT BZIP2_NEED_PREFIX)
-    MESSAGE (WARNING "BZIP2 with functions beginning with BZ2_ is needed.  Please upgrade to version 1.0 if you wish to use it.")
-  ENDIF (NOT BZIP2_NEED_PREFIX)
-ENDIF (BZIP2_FOUND)
+if (BZIP2_FOUND)
+  include_directories (${BZIP2_INCLUDE_DIR})
+  target_link_libraries (${TARGET_NAME_EXEC} ${BZIP2_LIBRARIES})
+  if (NOT BZIP2_NEED_PREFIX)
+    message (WARNING "BZIP2 with functions beginning with BZ2_ is needed.  Please upgrade to version 1.0 if you wish to use it.")
+  endif (NOT BZIP2_NEED_PREFIX)
+endif (BZIP2_FOUND)
 
