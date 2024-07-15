@@ -22,12 +22,25 @@
 
 /*******************************************************************/
 /*!
-    \file BlockStatisticsConfig.hpp[.in]
+    \file BlockStatistics_Config.hpp[.in]
     BlockStatistics configuration file.
 */
 /*******************************************************************/
 
-//  Version information for BlockStatistics
-#define BlockStatistics_VERSION_MAJOR @BlockStatistics_VERSION_MAJOR@
-#define BlockStatistics_VERSION_MINOR @BlockStatistics_VERSION_MINOR@
+#ifndef BLOCKSTATISTICS_CONFIG_HPP_IN
+#define BLOCKSTATISTICS_CONFIG_HPP_IN
+
+//!  Externally define the program version
+const std::string PROGRAM_VERSION = "@PROGRAM_VERSION@";
+
+//!  Externally defined Git hash
+const std::string GIT_HASH = "@GIT_HASH@";
+
+//!  Set if OpenMP exists
+#cmakedefine01 HAVE_OPENMP
+
+//!  Set if MPI exists
+#cmakedefine01 HAVE_MPI
+
+#endif
 

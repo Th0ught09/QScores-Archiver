@@ -35,7 +35,7 @@
 
 using namespace std;
 
-#include "BlockStatisticsConfig.hpp"
+#include "BlockStatistics_Config.hpp"
 #include "common.hpp"
 #include "block-statistics.hpp"
 
@@ -65,7 +65,8 @@ int main(int argc, char **argv) {
   }
 
   if (strcmp (argv[1], "1") == 0) {
-    cout << "BlockStatistics version " << BlockStatistics_VERSION_MAJOR << "." << BlockStatistics_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "BlockStatistics version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << GIT_HASH << endl;
   }
   else if (strcmp (argv[1], "2") == 0) {
     bs.UpdateFrequencyTable (tmp);
