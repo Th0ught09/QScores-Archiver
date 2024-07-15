@@ -57,7 +57,8 @@ int main(int argc, char **argv) {
   }
 
   if (strcmp (argv[1], "1") == 0) {
-    cout << "External Software version " << ExternalSoftware_VERSION_MAJOR << "." << ExternalSoftware_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "External Software version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << GIT_HASH << endl;
   }
   else if (strcmp (argv[1], "2") == 0) {
     ExternalSoftware external_software (true);

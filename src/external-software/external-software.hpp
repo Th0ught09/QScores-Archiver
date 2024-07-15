@@ -30,7 +30,7 @@
 #ifndef EXTERNAL_SOFTWARE_HPP
 #define EXTERNAL_SOFTWARE_HPP
 
-#include "ExternalSoftwareConfig.hpp"
+#include "ExternalSoftware_Config.hpp"
 #if ZLIB_FOUND
 #include "zlib.h"
 const bool g_USE_ZLIB = true;

@@ -30,15 +30,23 @@
 #ifndef EXTERNAL_SOFTWARE_CONFIG_HPP
 #define EXTERNAL_SOFTWARE_CONFIG_HPP
 
-//  Version information
-#define ExternalSoftware_VERSION_MAJOR @ExternalSoftware_VERSION_MAJOR@
-#define ExternalSoftware_VERSION_MINOR @ExternalSoftware_VERSION_MINOR@
-
 //  Set if zlib library exists
 #cmakedefine ZLIB_FOUND 1
 
 //  Set if bzlib2 library exists
 #cmakedefine BZIP2_FOUND 1
+
+//!  Externally define the program version
+const std::string PROGRAM_VERSION = "@PROGRAM_VERSION@";
+
+//!  Externally defined Git hash
+const std::string GIT_HASH = "@GIT_HASH@";
+
+//!  Set if OpenMP exists
+#cmakedefine01 HAVE_OPENMP
+
+//!  Set if MPI exists
+#cmakedefine01 HAVE_MPI
 
 #endif
 
