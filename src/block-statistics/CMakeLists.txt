@@ -31,8 +31,8 @@ cmake_policy (SET CMP0144 NEW)
 ##  Define the project name and target(s)
 
 set (CURR_PROJECT_NAME "BlockStatistics")
-set (TARGET_NAME_LIB "block_statistics")
-set (TARGET_NAME_EXEC "block_statistics_exe")
+set (TARGET_NAME_LIB "block-statistics")
+set (TARGET_NAME_EXEC "block-statistics_exe")
 
 add_library (${TARGET_NAME_LIB} "")
 add_executable (${TARGET_NAME_EXEC} "")
@@ -142,7 +142,7 @@ if (TARGET ${TARGET_NAME_EXEC})
   target_sources (${TARGET_NAME_EXEC} PRIVATE ${EXE_HPP_FILES})
 
   ##  Rename the executable
-  set_property (TARGET block_statistics_exe PROPERTY OUTPUT_NAME block_statistics)
+  set_property (TARGET block-statistics_exe PROPERTY OUTPUT_NAME block-statistics)
 
   install (TARGETS ${TARGET_NAME_EXEC} DESTINATION bin)
 endif ()

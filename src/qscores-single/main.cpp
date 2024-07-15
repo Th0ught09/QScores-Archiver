@@ -39,7 +39,7 @@
 using namespace std;
 
 #include "bitbuffer.hpp"
-#include "QScoresSingleConfig.hpp"
+#include "QScoresSingle_Config.hpp"
 #include "qscores-single-defn.hpp"
 #include "testing.hpp"
 #include "qscores-single.hpp"
@@ -79,7 +79,9 @@ int main(int argc, char **argv) {
   }
 
   if (strcmp (argv[1], "1") == 0) {
-    cout << "QScoresSingle version " << QScoresSingle_VERSION_MAJOR << "." << QScoresSingle_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "QScoresSingle version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << GIT_HASH << endl;
+
     return (EXIT_SUCCESS);
   }
   else if (strcmp (argv[1], "2") == 0) {

@@ -41,7 +41,7 @@ using namespace std;
 
 #include "bitbuffer.hpp"
 #include "block-statistics.hpp"
-#include "QScoresSingleConfig.hpp"
+#include "QScoresSingle_Config.hpp"
 #include "qscores-single-defn.hpp"
 #include "qscores-single.hpp"
 #include "binning.hpp"

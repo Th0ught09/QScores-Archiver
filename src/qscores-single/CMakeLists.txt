@@ -164,6 +164,11 @@ if (TARGET ${TARGET_NAME_LIB})
   target_sources (${TARGET_NAME_LIB} PRIVATE ${CPP_FILES})
   target_sources (${TARGET_NAME_LIB} PRIVATE ${HPP_FILES})
 
+  target_link_libraries (${TARGET_NAME_LIB} block-statistics)
+  target_link_libraries (${TARGET_NAME_LIB} bitio)
+  target_link_libraries (${TARGET_NAME_LIB} bitbuffer)
+  target_link_libraries (${TARGET_NAME_LIB} interpolative)
+
   install (TARGETS ${TARGET_NAME_LIB} DESTINATION lib)
 endif ()
 
