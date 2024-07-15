@@ -40,7 +40,7 @@ using namespace std;
 #include "bitbuffer.hpp"
 #include "bitio-defn.hpp"
 #include "qscores-single-defn.hpp"
-#include "QScoresSettingsConfig.hpp"
+#include "QScoresSettings_Config.hpp"
 #include "qscores-settings.hpp"
 
 
@@ -61,7 +61,8 @@ int main(int argc, char **argv) {
   if (strcmp (argv[1], "1") == 0) {
     cout << qscores_settings << endl;
 
-    cout << "QScoresSettings version " << QScoresSettings_VERSION_MAJOR << "." << QScoresSettings_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "QScoresSettings coding version " << PROGRAM_VERSION << " compiled on:   " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << GIT_HASH << endl;
   }
   else if (strcmp (argv[1], "2") == 0) {
     bool result = qscores_settings.SetQScoresMapping ("sanger");
@@ -80,7 +81,8 @@ int main(int argc, char **argv) {
 
     cout << qscores_settings << endl;
 
-    cout << "QScoresSettings version " << QScoresSettings_VERSION_MAJOR << "." << QScoresSettings_VERSION_MINOR << ":  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "QScoresSettings coding version " << PROGRAM_VERSION << " compiled on:   " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+    cout << "Git hash:  " << GIT_HASH << endl;
   }
 
   return (EXIT_SUCCESS);

@@ -27,7 +27,20 @@
 */
 /*******************************************************************/
 
-//  Version information
-#define QScoresSettings_VERSION_MAJOR @QScoresSettings_VERSION_MAJOR@
-#define QScoresSettings_VERSION_MINOR @QScoresSettings_VERSION_MINOR@
+#ifndef QSCORESSETTINGS_CONFIG_HPP_IN
+#define QSCORESSETTINGS_CONFIG_HPP_IN
+
+//!  Externally define the program version
+const std::string PROGRAM_VERSION = "@PROGRAM_VERSION@";
+
+//!  Externally defined Git hash
+const std::string GIT_HASH = "@GIT_HASH@";
+
+//!  Set if OpenMP exists
+#cmakedefine01 HAVE_OPENMP
+
+//!  Set if MPI exists
+#cmakedefine01 HAVE_MPI
+
+#endif
 
