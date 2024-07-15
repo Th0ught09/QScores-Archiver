@@ -21,19 +21,19 @@ Requirements
 
 | Software        | Minimum version | Tested version | Required? | Web site                              |
 | --------------- | :-------------: | :------------: | :-------: | ------------------------------------- |
-| g++             | 5.2.1           | 9.3.0          | Yes       | http://gcc.gnu.org/                   |
-| CMake           | 3.2.2           | 3.16.3         | Yes       | http://www.cmake.org/                 |
-| Boost library   | 1.59.0          | 1.71.0         | Yes       | http://www.boost.org/                 |
+| g++             | 5.2.1           | 13.2.0         | Yes       | http://gcc.gnu.org/                   |
+| CMake           | 3.5             | 3.28.3         | Yes       | http://www.cmake.org/                 |
+| Boost library   | 1.59.0          | 1.85.0         | Yes       | http://www.boost.org/                 |
 | zlib library    | 1.2.3           | 1.2.11         | No        | http://www.zlib.net/                  |
 | gzip            | 1.3.5           | 1.10           | No        | http://www.gzip.org/                  |
 | libbzip library | 1.0.0           | 1.0.8          | No        | http://www.bzip.org/                  |
 | bzip2           | 1.0.3           | 1.0.8          | No        | http://www.bzip.org/                  |
-| Doxygen         | 1.8.9.1         | 1.8.17         | No        | http://www.stack.nl/~dimitri/doxygen/ |
+| Doxygen         | 1.9.4           | 1.9.8          | No        | http://www.stack.nl/~dimitri/doxygen/ |
 
 
-Experiments in the paper using QScores-Archiver was executed on Linux systems running Debian 6.0 (squeeze) or CentOS 5.4.  Currently, it is being maintained on an Ubuntu 20.04.1 system (i.e., it's been tested recently on such a system).
+Experiments in the paper using QScores-Archiver was executed on Linux systems running Debian 6.0 (squeeze) or CentOS 5.4.  Currently, it is being maintained on an Ubuntu 24.04 system (i.e., it's been tested recently on such a system).
 
-Both optional and required tools for compiling or using QScores-Archiver is listed in the table above.  The column "Minimum version" refers to the software versions used during software development and when running the experiments in the paper.  They do not represent the minimum requirements; it is possible that lower versions can be used.  The column "Tested version" refers to the versions used for the most recent tests on Ubuntu 20.04.1.
+Both optional and required tools for compiling or using QScores-Archiver is listed in the table above.  The column "Minimum version" refers to the software versions used during software development and when running the experiments in the paper.  They do not represent the minimum requirements; it is possible that lower versions can be used.  The column "Tested version" refers to the versions used for the most recent tests on Ubuntu 24.04.
 
 The compression libraries and executables zlib, gzip, libbzip, and bzip2 are all optional and the software will compile without them.
 
@@ -42,7 +42,7 @@ Doxygen is a documentation system to extract comments that have been placed inli
 
 ###  Boost library
 
-The Boost Library must be both installed and compiled to make use of the program_options, system, and filesystem libraries. Under some Linux distributions, Boost can be installed using its associated package manager (such as `apt` for Debian and Ubuntu).  For example, on a more recent Ubuntu 20.04 system, the following packages (and its dependencies) were installed using `apt`:
+The Boost Library must be both installed and compiled to make use of the program_options, system, and filesystem libraries. Under some Linux distributions, Boost can be installed using its associated package manager (such as `apt` for Debian and Ubuntu).  For example, on a more recent Ubuntu 24.04 system, the following packages (and its dependencies) were installed using `apt`:
 
 * libboost-program-options1.71-dev
 * libboost-system1.71-dev
