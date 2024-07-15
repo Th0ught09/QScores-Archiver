@@ -22,11 +22,24 @@
 
 /*******************************************************************/
 /*!
-    \file InterpolativeConfig.hpp[.in]
+    \file Interpolative_Config.hpp[.in]
     Interpolative Coding configuration file.
 */
 /*******************************************************************/
 
-//  Version information for Interpolative coding
-#define Interpolative_VERSION_MAJOR @Interpolative_VERSION_MAJOR@
-#define Interpolative_VERSION_MINOR @Interpolative_VERSION_MINOR@
+#ifndef INTERPOLATIVE_CONFIG_HPP_IN
+#define INTERPOLATIVE_CONFIG_HPP_IN
+
+//!  Externally define the program version
+const std::string PROGRAM_VERSION = "@PROGRAM_VERSION@";
+
+//!  Externally defined Git hash
+const std::string GIT_HASH = "@GIT_HASH@";
+
+//!  Set if OpenMP exists
+#cmakedefine01 HAVE_OPENMP
+
+//!  Set if MPI exists
+#cmakedefine01 HAVE_MPI
+
+#endif

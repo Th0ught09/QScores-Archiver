@@ -62,10 +62,10 @@ void ShowInfo () {
   cout << sizeof (unsigned long long int) << endl;
   cout << sizeof (double) << endl;
 
-  cout << "Storage version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+  cout << "BioIO version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
   cout << "Git hash:  " << GIT_HASH << endl;
 
-  cerr << "==\tShowInfo successful!" << endl;
+  cout << "==\tShowInfo successful!" << endl;
 
   return;
 }
