@@ -119,7 +119,7 @@ bool ProcessOptions (int argc, char *argv[]) {
     store (po::command_line_parser (argc, argv).options (cmdline_options).run (), vm);
 
     if (vm.count ("version")) {
-      cout << "Storage version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
+      cout << "BitIO version " << PROGRAM_VERSION << " compiled on:  " << __DATE__ <<  " (" << __TIME__ << ")" << endl;
       cout << "Git hash:  " << GIT_HASH << endl;
       return false;
     }
