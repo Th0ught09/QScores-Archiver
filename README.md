@@ -15,7 +15,7 @@ This archive does not include any binaries. This program is described in the pap
 
 which we refer to as "the paper" throughout this document.
 
-The software also includes implementations of nonparameterised models, Huffman coding, and interpolative coding as separate C++ classes.  See these papers or books for further details:
+The software also includes implementations of static codes, Huffman coding, and interpolative coding as separate C++ classes.  See these papers or books for further details:
 
 * I. H. Witten, A. Moffat, and T. C. Bell.  "Managing Gigabytes", 1999, Second. edition, Morgan Kaufmann.
 * A. Moffat and L. Stuiver.  "Binary Interpolative Coding for Effective Index Compression". Information Retrieval 3(1): 25-47 (2000).
