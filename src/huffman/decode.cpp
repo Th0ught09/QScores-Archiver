@@ -121,9 +121,11 @@ void Huffman::DecodeFinish (BitBuffer &bitbuffer) {
 /*!
      Modify the m_Table data structure in preparation for message decoding.
      
-     Differs from the CACA pseudocode because m_Table is of size m_MaximumSymbol for both the encoder and the decoder.
-     That is, we refer to symbols in the dense table as m_Table[m_SymsUsed[i]].  This makes the loop in the CACA
-     pseudocode not work.  An easy fix is to just allocate a temporary array.  
+     Differs from the CACA pseudocode because m_Table is of size
+     m_MaximumSymbol for both the encoder and the decoder.  That is,
+     we refer to symbols in the dense table as m_Table[m_SymsUsed[i]].
+     This makes the loop in the CACA pseudocode not work.  An easy fix is
+     to just allocate a temporary array.
      
      So, an additional array of m_DistinctSymbols words of memory is being used.
      
@@ -135,8 +137,9 @@ void Huffman::PreDecodeMessage () {
     m_W[i] = m_Offset[i];
   }
   for (unsigned int i = 1; i <= m_DistinctSymbols; i++) {
-    unsigned int codelen = m_Table[m_SymsUsed[i]];
-    m_Table[m_SymsUsed[i]] = m_W[codelen];
+    unsigned int sym = m_SymsUsed[i];
+    unsigned int codelen = m_Table[sym];
+    m_Table[sym] = m_W[codelen];
     m_W[codelen]++;
   }
 

@@ -156,8 +156,9 @@ void Huffman::EncodeFinish (BitBuffer &bitbuffer) {
      Modify the m_Table data structure in preparation for message encoding.
      
      Difference with CACA implementation:  
-       The first for-loop starts from i = 1 and not i = 2.  This seems necessary for the case of encoding 
-       data made up of an alphabet of 2 symbols.
+       The first for-loop starts from i = 1 and not i = 2.  This seems
+       necessary for the case of encoding data made up of an alphabet
+       of 2 symbols.
 */
 void Huffman::PreEncodeMessage () {
 //   cerr << "[PreEncodeMessage]\t" << m_W[1] << "\t" << m_Offset[1] << endl;
