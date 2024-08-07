@@ -201,6 +201,8 @@ void Huffman::DecodePrelude (BitBuffer &bitbuffer) {
 unsigned int Huffman::DecodeSymbol (BitBuffer &bitbuffer) {
   unsigned int l = 1;
   
+  //  Fill up the bit buffer so that the number of bits is at
+  //    least the maximum codeword length
   if (m_VBits < m_MaximumCodewordLen) {
     unsigned int bits_to_read = m_MaximumCodewordLen - m_VBits;
     try {
@@ -208,7 +210,7 @@ unsigned int Huffman::DecodeSymbol (BitBuffer &bitbuffer) {
       m_VBits += bits_to_read;
     }
     catch (exception &BitBuffer_Input_Exception) {
-      cerr << "EE\tOpps!" << endl;
+      cerr << "EE\tOpps -- unexpected end to the input stream of bits!" << endl;
     }
   }
   
@@ -220,6 +222,7 @@ unsigned int Huffman::DecodeSymbol (BitBuffer &bitbuffer) {
   m_V = m_V - (c << (m_MaximumCodewordLen - l));
   unsigned int x = (c - m_Base[l]) + m_Offset[l];
   
+  //  Update the number of bits in the bit buffer
   m_VBits -= l;
 
   return (m_SymsUsed[x]);
