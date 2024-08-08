@@ -36,7 +36,12 @@ class SortByFrequency {
     SortByFrequency (Huffman *x) : huffman (x) {}
     
     bool operator () (const unsigned int lhs, const unsigned int rhs) {
-      return ((huffman -> GetTableValue (lhs)) > (huffman -> GetTableValue (rhs)));
+      if (huffman -> GetTableValue (lhs) == huffman -> GetTableValue (rhs)) {
+        return (lhs < rhs);
+      }
+      else {
+        return ((huffman -> GetTableValue (lhs)) > (huffman -> GetTableValue (rhs)));
+      }
     }
 };
 
