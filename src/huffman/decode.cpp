@@ -54,19 +54,40 @@ using namespace std;
      \param[in] bitbuffer The bitbuffer to read the bits from.
 */
 void Huffman::DecodeBegin (BitBuffer &bitbuffer) {
-//   if (GetDebug ()) {
-//     cerr << "II\tDecodePrelude ()" << endl;
-//   }
+  if (GetDebug ()) {
+    cerr << "II\tDecodePrelude ()" << endl;
+  }
   DecodePrelude (bitbuffer);
 
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[0]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   //  Set the m_W, m_Base, and m_Offset arrays
-//   if (GetDebug ()) {
-//     cerr << "II\tSetWBaseOffset ()" << endl;
-//   }
+  if (GetDebug ()) {
+    cerr << "II\tSetWBaseOffset ()" << endl;
+  }
   SetWBaseOffset ();
   
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_W.size (); i++) {
+      cerr << "\t[1]\t" << i << "\t" << m_W[i] << "\t" << m_Base[i]  << "\t" << m_Offset[i] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   PreDecodeMessage ();
   
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[2]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   return;
 }
 
@@ -167,10 +188,6 @@ void Huffman::DecodePrelude (BitBuffer &bitbuffer) {
   m_DistinctSymbols = Delta_Decode (bitbuffer);
   m_MaximumCodewordLen = Delta_Decode (bitbuffer);
 
-//   if (GetDebug ()) {
-//     cerr << "II\tDecoding\t" << m_MessageLength << "\t" << m_MaximumSymbol << "\t" << m_DistinctSymbols << "\t" << m_MaximumCodewordLen << endl;
-//   }
-  
   //  Set the table sizes now that it is known; initialize everything to 0
   m_Table.resize (m_MaximumSymbol + 1, 0);
   
@@ -224,6 +241,10 @@ unsigned int Huffman::DecodeSymbol (BitBuffer &bitbuffer) {
   
   //  Update the number of bits in the bit buffer
   m_VBits -= l;
+
+  if (GetDebug ()) {
+    cerr << "\t[*]\t" << c << "\t" << x << "\t" << m_SymsUsed[x] << "\t" << m_Offset[l] << "\t" << m_Base[l] << "\t(length " << l << ")" << endl;
+  }
 
   return (m_SymsUsed[x]);
 }

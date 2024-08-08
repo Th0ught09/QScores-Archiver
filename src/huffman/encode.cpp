@@ -59,51 +59,103 @@ void Huffman::EncodeBegin (BitBuffer &bitbuffer) {
   }
 
   //  Sort the symbols by decreasing frequency
-//   cerr << "II\tSortSymsUsed_Frequency ()" << endl;
-//   for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
-//     cerr << "\t[0]\t" << i << "\t" << m_SymsUsed[i] << "\t(" << m_Table[m_SymsUsed[i]] << ")" << endl;
-//   }
-  SortSymsUsed_Frequency ();
-//   for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
-//     cerr << "\t[1]\t" << i << "\t" << m_SymsUsed[i] << "\t(" << m_Table[m_SymsUsed[i]] << ")" << endl;
-//   }
+  if (GetDebug ()) {
+    cerr << "II\tSortSymsUsed_Frequency ()" << endl;
 
-  //  Calculate the Huffman codeword lengths 
-//   cerr << "II\tCalculateHuffmanCode ()" << endl;
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[0]\t" << i << "\t" << m_SymsUsed[i] << "\t(" << m_Table[m_SymsUsed[i]] << ")" << endl;
+    }
+    cerr << endl << endl;
+  }
+
+  SortSymsUsed_Frequency ();
+
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[1]\t" << i << "\t" << m_SymsUsed[i] << "\t(" << m_Table[m_SymsUsed[i]] << ")" << endl;
+    }
+    cerr << endl << endl;
+  }
+
+  //  Calculate the Huffman codeword lengths
+  if (GetDebug ()) {
+    cerr << "II\tCalculateHuffmanCode ()" << endl;
+  }
+
   CalculateHuffmanCode ();
-//   for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
-//     cerr << "\t[2]\t" << i << "\t" << m_Table[m_SymsUsed[i]] << endl;
-//   }
-  
+
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[2]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   //  Initialize the codewords to 0, assign them, and then record the longest codeword length
-//   cerr << "II\t\tm_DistinctSymbols = " << m_DistinctSymbols << endl;
   m_MaximumCodewordLen = m_Table[m_SymsUsed[m_DistinctSymbols]];
-//   cerr << "II\t\tm_MaximumCodewordLen = " << m_MaximumCodewordLen << endl;
+  if (GetDebug ()) {
+    cerr << "II\t\tm_DistinctSymbols = " << m_DistinctSymbols << endl;
+    cerr << "II\t\tm_MaximumCodewordLen = " << m_MaximumCodewordLen << endl;
+  }
 
   //  Sort the symbols by value and then record the maximum possible symbol
-//   cerr << "II\tSortSymsUsed_Value ()" << endl;
+  if (GetDebug ()) {
+    cerr << "II\tSortSymsUsed_Value ()" << endl;
+  }
+
   SortSymsUsed_Value ();
   m_MaximumSymbol = m_SymsUsed[m_DistinctSymbols];
-//   cerr << "II\t\tm_MaximumSymbol = " << m_MaximumSymbol << endl;
+  if (GetDebug ()) {
+    cerr << "II\t\tm_MaximumSymbol = " << m_MaximumSymbol << endl;
+  }
+
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[3]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
 
   //  Set the m_W, m_Base, and m_Offset arrays
-//   cerr << "II\tSetWBaseOffset ()" << endl;
+  if (GetDebug ()) {
+    cerr << "II\tSetWBaseOffset ()" << endl;
+  }
+
   SetWBaseOffset ();
-//   for (unsigned int i = 0; i < m_W.size (); i++) {
-//     cerr << "\t[4]\t" << i << "\t" << m_W[i] << "\t" << m_Base[i]  << "\t" << m_Offset[i] << endl;
-//   }
+
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_W.size (); i++) {
+      cerr << "\t[4]\t" << i << "\t" << m_W[i] << "\t" << m_Base[i]  << "\t" << m_Offset[i] << endl;
+    }
+    cerr << endl << endl;
+  }
   
-//   cerr << "II\tEncodePrelude ()" << endl;
+  if (GetDebug ()) {
+    cerr << "II\tEncodePrelude ()" << endl;
+  }
+
   EncodePrelude (bitbuffer);
-//   for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
-//     cerr << "\t[5]\t" << i << "\t" << m_Table[m_SymsUsed[i]] << endl;
-//   }
+
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[5]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
+
+  if (GetDebug ()) {
+    cerr << "II\tPreEncodeMessage ()" << endl;
+  }
 
   PreEncodeMessage ();
-//   for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
-//     cerr << "\t[6]\t" << i << "\t" << m_Table[m_SymsUsed[i]] << endl;
-//   }
-  
+
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[6]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   return;
 }
 
@@ -224,7 +276,10 @@ void Huffman::EncodeSymbol (BitBuffer &bitbuffer, unsigned int x) {
   
   unsigned int c = ((x - m_Offset[l]) + m_Base[l]);
 
-//   cerr << "\t" << c << "\t(length " << l << ")" << endl;
+  if (GetDebug ()) {
+    cerr << "\t[*]\t" << c << "\t" << x << "\t" << m_Offset[l] << "\t" << m_Base[l] << "\t(length " << l << ")" << endl;
+  }
+
   bitbuffer.WriteBits (c, l);  
 
   return;
