@@ -159,7 +159,7 @@ if (TARGET ${TARGET_NAME_EXEC})
   target_sources (${TARGET_NAME_EXEC} PRIVATE ${EXE_HPP_FILES})
 
   ##  Rename the executable
-  set_property (TARGET qscores_exe PROPERTY OUTPUT_NAME qscores)
+  set_property (TARGET qscores_exe PROPERTY OUTPUT_NAME qscores-archiver)
 
   if (Boost_FOUND)
     target_include_directories (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")

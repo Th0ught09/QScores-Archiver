@@ -95,7 +95,8 @@ Software Documentation
 ----------------------
 
 QScores-Archiver was developed with inline comments that can be extracted using the Doxygen documentation system. They can be created using make as well. Here, we show how to generate the documentation for the QScores-Archiver main code.
-   1. In the directory where you ran make to compile the executable, type `make qscores-archiver-doc`. If Doxygen can be found, then the documentation will be generated in the doc/ subdirectory.
+   1. When you ran `cmake` (above), add the `-DBUILD_DOCS=ON` flag.
+   2. Run `make` as before, which will also generate the documentation in the `doc/` subdirectory.
    2. You may choose to do a `make install` which would put this documentation in the `doc/` subdirectory under the installation prefix. See "Files and Directories" for more information.
 
 The following HTML file can be used if the documentation has been installed:  documentation.html. Of course, the documentation has to be created first according to step 1.
@@ -111,7 +112,7 @@ After installation, the following directory structure should result:
     ├── bin                     Binary files, including the qscores-archiver executable
     ├── data                    Data directory
     │   ├── sample.qs           Sample data file of 1,000 quality scores of length 100 qscores each
-    └── data                    Documentation directory; Doxygen-generated documents are placed here
+    └── doc                     Documentation directory; Doxygen-generated documents are placed here
         ├── classes.png         Directed graph of dependencies between libraries.
         ├── classes.dia         Graphviz source code for classes.png .
         ├── documentation.html  Top-level HTML file for viewing Doxygen-generated documents
@@ -227,5 +228,5 @@ This GitHub repository was created from the original tarball on my homepage a fe
 
 
     Raymond Wan
-    October 7, 2020
+    24 December 2024
 
