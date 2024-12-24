@@ -54,19 +54,40 @@ using namespace std;
      \param[in] bitbuffer The bitbuffer to read the bits from.
 */
 void Huffman::DecodeBegin (BitBuffer &bitbuffer) {
-//   if (GetDebug ()) {
-//     cerr << "II\tDecodePrelude ()" << endl;
-//   }
+  if (GetDebug ()) {
+    cerr << "II\tDecodePrelude ()" << endl;
+  }
   DecodePrelude (bitbuffer);
 
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[0]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   //  Set the m_W, m_Base, and m_Offset arrays
-//   if (GetDebug ()) {
-//     cerr << "II\tSetWBaseOffset ()" << endl;
-//   }
+  if (GetDebug ()) {
+    cerr << "II\tSetWBaseOffset ()" << endl;
+  }
   SetWBaseOffset ();
   
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_W.size (); i++) {
+      cerr << "\t[1]\t" << i << "\t" << m_W[i] << "\t" << m_Base[i]  << "\t" << m_Offset[i] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   PreDecodeMessage ();
   
+  if (GetDebug ()) {
+    for (unsigned int i = 0; i < m_SymsUsed.size (); i++) {
+      cerr << "\t[2]\t" << i << "\t" << m_SymsUsed[i] << "\t" << m_Table[m_SymsUsed[i]] << endl;
+    }
+    cerr << endl << endl;
+  }
+
   return;
 }
 
@@ -121,9 +142,11 @@ void Huffman::DecodeFinish (BitBuffer &bitbuffer) {
 /*!
      Modify the m_Table data structure in preparation for message decoding.
      
-     Differs from the CACA pseudocode because m_Table is of size m_MaximumSymbol for both the encoder and the decoder.
-     That is, we refer to symbols in the dense table as m_Table[m_SymsUsed[i]].  This makes the loop in the CACA
-     pseudocode not work.  An easy fix is to just allocate a temporary array.  
+     Differs from the CACA pseudocode because m_Table is of size
+     m_MaximumSymbol for both the encoder and the decoder.  That is,
+     we refer to symbols in the dense table as m_Table[m_SymsUsed[i]].
+     This makes the loop in the CACA pseudocode not work.  An easy fix is
+     to just allocate a temporary array.
      
      So, an additional array of m_DistinctSymbols words of memory is being used.
      
@@ -135,8 +158,9 @@ void Huffman::PreDecodeMessage () {
     m_W[i] = m_Offset[i];
   }
   for (unsigned int i = 1; i <= m_DistinctSymbols; i++) {
-    unsigned int codelen = m_Table[m_SymsUsed[i]];
-    m_Table[m_SymsUsed[i]] = m_W[codelen];
+    unsigned int sym = m_SymsUsed[i];
+    unsigned int codelen = m_Table[sym];
+    m_Table[sym] = m_W[codelen];
     m_W[codelen]++;
   }
 
@@ -164,10 +188,6 @@ void Huffman::DecodePrelude (BitBuffer &bitbuffer) {
   m_DistinctSymbols = Delta_Decode (bitbuffer);
   m_MaximumCodewordLen = Delta_Decode (bitbuffer);
 
-//   if (GetDebug ()) {
-//     cerr << "II\tDecoding\t" << m_MessageLength << "\t" << m_MaximumSymbol << "\t" << m_DistinctSymbols << "\t" << m_MaximumCodewordLen << endl;
-//   }
-  
   //  Set the table sizes now that it is known; initialize everything to 0
   m_Table.resize (m_MaximumSymbol + 1, 0);
   
@@ -198,6 +218,8 @@ void Huffman::DecodePrelude (BitBuffer &bitbuffer) {
 unsigned int Huffman::DecodeSymbol (BitBuffer &bitbuffer) {
   unsigned int l = 1;
   
+  //  Fill up the bit buffer so that the number of bits is at
+  //    least the maximum codeword length
   if (m_VBits < m_MaximumCodewordLen) {
     unsigned int bits_to_read = m_MaximumCodewordLen - m_VBits;
     try {
@@ -205,7 +227,7 @@ unsigned int Huffman::DecodeSymbol (BitBuffer &bitbuffer) {
       m_VBits += bits_to_read;
     }
     catch (exception &BitBuffer_Input_Exception) {
-      cerr << "EE\tOpps!" << endl;
+      cerr << "EE\tOpps -- unexpected end to the input stream of bits!" << endl;
     }
   }
   
@@ -217,7 +239,12 @@ unsigned int Huffman::DecodeSymbol (BitBuffer &bitbuffer) {
   m_V = m_V - (c << (m_MaximumCodewordLen - l));
   unsigned int x = (c - m_Base[l]) + m_Offset[l];
   
+  //  Update the number of bits in the bit buffer
   m_VBits -= l;
+
+  if (GetDebug ()) {
+    cerr << "\t[*]\t" << c << "\t" << x << "\t" << m_SymsUsed[x] << "\t" << m_Offset[l] << "\t" << m_Base[l] << "\t(length " << l << ")" << endl;
+  }
 
   return (m_SymsUsed[x]);
 }

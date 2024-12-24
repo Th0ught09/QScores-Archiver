@@ -11,9 +11,17 @@ QScores-Archiver is a system for archiving quality scores in FASTQ formatted nex
 
 This archive does not include any binaries. This program is described in the paper:
 
-    R. Wan, V. N. Anh, and K. Asai. Transformations for the Compression of FASTQ Quality Scores of Next Generation Sequencing Data. Bioinformatics, 28(5):623-635, 2012
+    R. Wan, V. N. Anh, and K. Asai. "Transformations for the Compression of FASTQ Quality Scores of Next Generation Sequencing Data". Bioinformatics, 28(5):623-635, 2012
 
-which we refer to as "the paper" throughout this document.  The software has been updated in 2020 for current compilers.
+which we refer to as "the paper" throughout this document.
+
+The software also includes implementations of static codes, Huffman coding, and interpolative coding as separate C++ classes.  See these papers or books for further details:
+
+* I. H. Witten, A. Moffat, and T. C. Bell.  "Managing Gigabytes", 1999, Second. edition, Morgan Kaufmann.
+* A. Moffat and L. Stuiver.  "Binary Interpolative Coding for Effective Index Compression". Information Retrieval 3(1): 25-47 (2000).
+* A. Moffat and A. Turpin, "Compression and Coding Algorithms", 2002, Kluwer Academic Publishers.
+
+The software has been updated in 2020 for current compilers.
 
 
 Requirements
@@ -67,24 +75,24 @@ Compiling
 
 The QScores-Archiver software is written in C++ and has been compiled using versions 5.2.1 and 9.3.0 of g++. The system has been tested on a 64-bit system, but it should work on other architectures.
 
-CMake (at least version 3.2.2) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
+CMake (at least version 3.5) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
    1. Install Boost; consult the Boost documentation on up-to-date information on how to do this. Then set the variable BOOST_ROOT to the location of Boost if it has not already been set:
 
            export BOOST_ROOT=/usr/local/boost_1_59_0/
            
-   2. Copy the QScores-Archiver archive in a temporary directory [i.e., `~/tmp/qscores/`].
-   3. Within `~/tmp/qscores/`, create a `build/` subdirectory and then enter it (Actually, build/ can be anywhere since it will be deleted later; this is just an example.). Then run
+   2. Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
+   3. Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
 
-           cmake ..
+           cmake ../src
            
-      where ".." represents the location of the top-level CMakeLists.txt. By default, this will set up a Makefile to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this:
+      where ".." represents the location of the top-level CMakeLists.txt in `~/tmp/QScores-Archiver/src/`. By default, this will set up a Makefile to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this (for example):
 
            cmake .. -DCMAKE_INSTALL_PREFIX=~/tmp
            
       replacing the installation prefix with whatever you prefer.
-   4. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should in the build subdirectory as `qscores/qscores-archiver`.
+   4. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should be in the build subdirectory as `qscores/qscores-archiver`.
    5. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
-   6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the cmake line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/qscores/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
+   6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the cmake line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
 
 The dependencies between the various modules is depicted in the figure below (generated using `cmake` with the `--graphviz` option):
 
