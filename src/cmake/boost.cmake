@@ -41,6 +41,8 @@ if (NOT Boost_FOUND)
   ##    Helpful if there are conflicts between locally and system-installed versions
   set (Boost_NO_BOOST_CMAKE OFF)
 
+set(BOOST_ROOT "/usr/include")  
+set(BOOST_LIBRARYDIR "/usr/lib/x86_64-linux-gnu") 
   set (BOOST_COMPILED_LIBRARIES program_options system filesystem serialization mpi)
   find_package (Boost 1.79.0 REQUIRED COMPONENTS ${BOOST_COMPILED_LIBRARIES})
 endif ()
