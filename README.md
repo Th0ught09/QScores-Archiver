@@ -47,6 +47,12 @@ The compression libraries and executables zlib, gzip, libbzip, and bzip2 are all
 
 Doxygen is a documentation system to extract comments that have been placed inline in the source code. See the section below entitled "Software Documentation" for more information.
 
+To install on debian based systems please run
+
+```
+sudo apt install cmake gcc g++ libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-serialization-dev libboost-mpi-dev doxygen 
+```
+
 
 ###  Boost library
 
