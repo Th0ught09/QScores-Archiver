@@ -104,6 +104,11 @@ The dependencies between the various modules is depicted in the figure below (ge
 
 ![Dependencies](./dependencies.svg)
 
+### Docker
+A Dockerfile is provided to build a container with all the dependencies installed. To build the container run:
+
+    docker build -t <name> .
+
 
 Software Documentation
 ----------------------
