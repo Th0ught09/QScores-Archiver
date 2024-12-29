@@ -27,7 +27,7 @@ The software has been updated in 2020 for current compilers.
 Requirements
 ------------
 
-| Software        | Minimum version | Tested version | Required? | Website                               |
+| Software        | Minimum version | Tested version | Required? | Web site                               |
 | --------------- | :-------------: | :------------: | :-------: | ------------------------------------- |
 | g++             | 5.2.1           | 13.2.0         | Yes       | http://gcc.gnu.org/                   |
 | CMake           | 3.5             | 3.28.3         | Yes       | http://www.cmake.org/                 |
