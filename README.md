@@ -27,7 +27,7 @@ The software has been updated in 2020 for current compilers.
 Requirements
 ------------
 
-| Software        | Minimum version | Tested version | Required? | Web site                              |
+| Software        | Minimum version | Tested version | Required? | Web site                               |
 | --------------- | :-------------: | :------------: | :-------: | ------------------------------------- |
 | g++             | 5.2.1           | 13.2.0         | Yes       | http://gcc.gnu.org/                   |
 | CMake           | 3.5             | 3.28.3         | Yes       | http://www.cmake.org/                 |
@@ -37,20 +37,21 @@ Requirements
 | libbzip library | 1.0.0           | 1.0.8          | No        | http://www.bzip.org/                  |
 | bzip2           | 1.0.3           | 1.0.8          | No        | http://www.bzip.org/                  |
 | Doxygen         | 1.9.4           | 1.9.8          | No        | http://www.stack.nl/~dimitri/doxygen/ |
+| Graphviz        |                 | 2.42.4         | No        | https://www.graphviz.org/download/    | 
 
 
 Experiments in the paper using QScores-Archiver was executed on Linux systems running Debian 6.0 (squeeze) or CentOS 5.4.  Currently, it is being maintained on an Ubuntu 24.04 system (i.e., it's been tested recently on such a system).
 
 Both optional and required tools for compiling or using QScores-Archiver is listed in the table above.  The column "Minimum version" refers to the software versions used during software development and when running the experiments in the paper.  They do not represent the minimum requirements; it is possible that lower versions can be used.  The column "Tested version" refers to the versions used for the most recent tests on Ubuntu 24.04.
 
-The compression libraries and executables zlib, gzip, libbzip, and bzip2 are all optional and the software will compile without them.
+The compression libraries and executables `zlib`, `gzip`, `libbzip`, and `bzip2` are all optional and the software will compile without them.
 
 Doxygen is a documentation system to extract comments that have been placed inline in the source code. See the section below entitled "Software Documentation" for more information.
 
-To install on debian based systems please run
+To install on Debian based systems please run
 
 ```
-sudo apt install cmake gcc g++ libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-serialization-dev libboost-mpi-dev doxygen 
+sudo apt install cmake gcc g++ libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-serialization-dev libboost-mpi-dev doxygen graphviz
 ```
 
 
@@ -84,21 +85,21 @@ The QScores-Archiver software is written in C++ and has been compiled using vers
 CMake (at least version 3.5) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
    1. Install Boost; consult the Boost documentation on up-to-date information on how to do this. Then set the variable BOOST_ROOT to the location of Boost if it has not already been set:
 
-           export BOOST_ROOT=/usr/local/boost_1_59_0/
+           export BOOST_ROOT=/usr/local
            
    2. Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
    3. Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
 
            cmake ../src
            
-      where ".." represents the location of the top-level CMakeLists.txt in `~/tmp/QScores-Archiver/src/`. By default, this will set up a Makefile to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this (for example):
+      where ".." represents the location of the top-level `CMakeLists.txt` in `~/tmp/QScores-Archiver/src/`. By default, this will set up a Makefile to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this (for example):
 
            cmake .. -DCMAKE_INSTALL_PREFIX=~/tmp
            
       replacing the installation prefix with whatever you prefer.
    4. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should be in the build subdirectory as `qscores/qscores-archiver`.
    5. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
-   6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the cmake line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
+   6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the `cmake` line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
 
 The dependencies between the various modules is depicted in the figure below (generated using `cmake` with the `--graphviz` option):
 
