@@ -166,6 +166,10 @@ void BitBuffer::Flush () {
     else if (GetMode () == e_MODE_APPEND) {
       result = FlushWrite ();
     }
+
+    if (!result) {
+      cerr << "WW\tUnexpected error while flushing the bit buffer." << endl;
+    }
   }
 
   SetFlushed (true);
@@ -192,6 +196,10 @@ void BitBuffer::Close () {
     }
     else if (GetMode () == e_MODE_APPEND) {
       result = CloseWrite ();
+    }
+
+    if (!result) {
+      cerr << "WW\tUnexpected error while closing the bit buffer." << endl;
     }
   }
 
