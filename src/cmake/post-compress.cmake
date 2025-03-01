@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -22,12 +22,12 @@
 
 if (ZLIB_FOUND)
   include_directories (${ZLIB_INCLUDE_DIRS})
-  target_link_libraries (${TARGET_NAME_EXEC} ${ZLIB_LIBRARIES})
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE ${ZLIB_LIBRARIES})
 endif (ZLIB_FOUND)
 
 if (BZIP2_FOUND)
   include_directories (${BZIP2_INCLUDE_DIR})
-  target_link_libraries (${TARGET_NAME_EXEC} ${BZIP2_LIBRARIES})
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE ${BZIP2_LIBRARIES})
   if (NOT BZIP2_NEED_PREFIX)
     message (WARNING "BZIP2 with functions beginning with BZ2_ is needed.  Please upgrade to version 1.0 if you wish to use it.")
   endif (NOT BZIP2_NEED_PREFIX)

@@ -21,7 +21,7 @@ The software also includes implementations of static codes, Huffman coding, and 
 * A. Moffat and L. Stuiver.  "Binary Interpolative Coding for Effective Index Compression". Information Retrieval 3(1): 25-47 (2000).
 * A. Moffat and A. Turpin, "Compression and Coding Algorithms", 2002, Kluwer Academic Publishers.
 
-The software has been updated in 2020 for current compilers.
+The software has been updated in 2025 for current compilers.
 
 
 Requirements
@@ -29,9 +29,9 @@ Requirements
 
 | Software        | Minimum version | Tested version | Required? | Web site                               |
 | --------------- | :-------------: | :------------: | :-------: | ------------------------------------- |
-| g++             | 5.2.1           | 13.2.0         | Yes       | http://gcc.gnu.org/                   |
-| CMake           | 3.5             | 3.28.3         | Yes       | http://www.cmake.org/                 |
-| Boost library   | 1.59.0          | 1.85.0         | Yes       | http://www.boost.org/                 |
+| g++             | 5.2.1           | 14.2.0         | Yes       | http://gcc.gnu.org/                   |
+| CMake           | 3.5             | 3.30.3         | Yes       | http://www.cmake.org/                 |
+| Boost library   | 1.59.0          | 1.87.0         | Yes       | http://www.boost.org/                 |
 | zlib library    | 1.2.3           | 1.2.11         | No        | http://www.zlib.net/                  |
 | gzip            | 1.3.5           | 1.10           | No        | http://www.gzip.org/                  |
 | libbzip library | 1.0.0           | 1.0.8          | No        | http://www.bzip.org/                  |
@@ -48,24 +48,22 @@ The compression libraries and executables `zlib`, `gzip`, `libbzip`, and `bzip2`
 
 Doxygen is a documentation system to extract comments that have been placed inline in the source code. See the section below entitled "Software Documentation" for more information.
 
-To install on Debian based systems please run
+On a Debian/Ubuntu-based system, the package manager `apt` can be used as follows to install most of the above dependencies (see the next section about Boost):
 
-```
-sudo apt install cmake gcc g++ libboost-program-options-dev libboost-system-dev libboost-filesystem-dev libboost-serialization-dev libboost-mpi-dev doxygen graphviz
-```
+`sudo apt install cmake gcc g++ doxygen graphviz`
 
 
 ###  Boost library
 
-The Boost Library must be both installed and compiled to make use of the program_options, system, and filesystem libraries. Under some Linux distributions, Boost can be installed using its associated package manager (such as `apt` for Debian and Ubuntu).  For example, on a more recent Ubuntu 24.04 system, the following packages (and its dependencies) were installed using `apt`:
+In addition to the above, the Boost Library must be both installed and compiled to make use of the program_options, system, and filesystem libraries.  There are two options available.
 
-* libboost-program-options1.71-dev
-* libboost-system1.71-dev
-* libboost-filesystem1.71-dev
-* libboost-serialization1.71-dev
-* libboost-mpi1.71-dev
+The first is to pre-install Boost before compiling this program.  On a Debian/Ubuntu-based system, the package manager `apt` can be used as follows:
 
-Consult the Boost documentation for further information.
+`sudo apt install libboost-program-options-dev libboost-filesystem-dev`
+
+The second option is to proceed with configuring QScores-Archiver (see the section "Configuring and Compiling" below) in one of two ways:
+  1.  Boost will be copied from a local directory and compiled within the `build/` directory.
+  2.  Boost is cloned from GitHub and compiled.  To enable this option, edit `src/cmake/boost.cmake` and go to the section with "###############" and read carefully.  Swap the comments around.  The second option only has one command:  CPMAddPackage ()
 
 
 ###  conda
@@ -77,18 +75,14 @@ To create the environment, type:
     `conda env create -f environment.yml`
     
 
-Compiling
----------
+Configuring and Compiling
+-------------------------
 
 The QScores-Archiver software is written in C++ and has been compiled using versions 5.2.1 and 9.3.0 of g++. The system has been tested on a 64-bit system, but it should work on other architectures.
 
 CMake (at least version 3.5) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
-   1. Install Boost; consult the Boost documentation on up-to-date information on how to do this. Then set the variable BOOST_ROOT to the location of Boost if it has not already been set:
-
-           export BOOST_ROOT=/usr/local
-           
-   2. Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
-   3. Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
+   1. Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
+   2. Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
 
            cmake ../src
            
@@ -97,16 +91,16 @@ CMake (at least version 3.5) is used to compile the software and it is recommend
            cmake .. -DCMAKE_INSTALL_PREFIX=~/tmp
            
       replacing the installation prefix with whatever you prefer.
-   4. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should be in the build subdirectory as `qscores/qscores-archiver`.
-   5. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
-   6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the `cmake` line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
+   3. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should be in the build subdirectory as `qscores/qscores-archiver`.
+   4. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
+   5. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the `cmake` line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
 
 The dependencies between the various modules is depicted in the figure below (generated using `cmake` with the `--graphviz` option):
 
 ![Dependencies](./dependencies.svg)
 
-### Docker
-A Dockerfile is provided to build a container with all the dependencies installed. To build the container run:
+###  Docker
+A `Dockerfile` has been provided to build a container with all the dependencies installed.  To build the container run:
 
     docker build -t <name> .
 
@@ -167,8 +161,7 @@ provide two text files:
   * unibinning.txt
   * logbinning.txt
 
-Both of these files are two-column tables. The first column is the parameter to give to QScores-Archiver (i.e., x) and the second column is the size of the alphabet (i.e., |Σ|). Note that ties in the alphabet size are possible -- logarithmic binning with either 12 quality scores per bin or 13 quality scores per bin will results in an alphabet of size 8. For the paper, even
-duplicate |Σ| were plotted -- the difference is just too small to notice in the graphs.
+Both of these files are two-column tables. The first column is the parameter to give to QScores-Archiver (i.e., x) and the second column is the size of the alphabet (i.e., |Σ|). Note that ties in the alphabet size are possible -- logarithmic binning with either 12 quality scores per bin or 13 quality scores per bin will results in an alphabet of size 8. For the paper, even duplicate |Σ| were plotted -- the difference is just too small to notice in the graphs.
 
 
 ### Sample Run
@@ -211,7 +204,13 @@ There are many things that were intended for QScores-Archiver which have not yet
 Also, QScores-Archiver does not make use of standard input and output. To be honest, I tried and did not know how in C++ for binary input/output. However, since this would be a useful feature to have to reduce disk I/O if QScores-Archiver is used in a pipeline, this remains a priority for me.
 
     [1] N. J. Larsson and A. Moffat. Offline Dictionary-Based Compression. In Proc. IEEE, 88(11), 1722-1732, November 2000. 
-    [2] See also [Re-Store](http://rwanwork.info/en/restore.html).
+    [2] See also [Re-Store](https://www.rwanwork.info/en/restore.html).
+
+
+Acknowledgements
+----------------
+
+Configuring and compiling Boost during installation of QScores-Archiver is due to the [boost-cmake](https://github.com/ClausKlein/boost-cmake/) repository of [Claus Klein](https://github.com/ClausKlein) in early 2025.  This is greatly appreciated!  Previously, this software required the user to build and compile Boost.
 
 
 About QScores-Archiver
@@ -232,21 +231,21 @@ Copyright and License
 ---------------------
 
      QScores-Archiver (Quality scores archiver)
-     Copyright (C) 2011-2015, 2024 by Raymond Wan
+     Copyright (C) 2011-2015, 2024-2025 by Raymond Wan
 
 QScores-Archiver is distributed under the terms of the GNU Lesser General Public License (LGPL, version 3 or later) -- see the file COPYING and COPYING.LESSER for details.
 
 Permission is granted to copy, distribute and/or modify this document under the terms of the GNU Free Documentation License, Version 1.3 or any later version published by the Free Software Foundation; with no Invariant Sections, no Front-Cover Texts and no Back-Cover Texts. A copy of the license is included with the archive as COPYING.DOC.
 
-Please see the doc/ directory for license and documentation.
+Please see the `doc/` directory for license and documentation.
 
 
 About This Repository
 ---------------------
 
-This GitHub repository was created from the original tarball on my homepage a few years ago.  Initially, it was identical to the version described in the paper.  Hopefully, it will be easier for me to maintain in GitHub.
+This GitHub repository was created from the original tarball on my homepage many years ago.  Initially, it was identical to the version described in the paper.  Hopefully, it will be easier for me to maintain in GitHub.
 
 
     Raymond Wan
-    24 December 2024
+    1 March 2025
 

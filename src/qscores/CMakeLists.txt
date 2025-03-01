@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -39,12 +39,19 @@ add_executable (${TARGET_NAME_EXEC} "")
 ########################################
 ##  Set the C++ standard
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ##  Use target_compile_features () for macOS
-target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_11)
+target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_17)
+
+
+########################################
+##  Set up the software
+
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores" LANGUAGES CXX)
+message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
 
 
 ########################################
@@ -91,35 +98,40 @@ if (NOT DEFINED MAIN_SRC_PATH)
   list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
 endif ()
 
-##  Include externally defined modules
-include (add_subdirectory_once)
-
 
 ########################################
-##  Set up the software
-include (initial-msg)
+##  Include modules
 
-project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores" LANGUAGES CXX)
-message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
+##  Include CMake provided modules
+##    Provides install variables defined by the GNU Coding Standards
+include (GNUInstallDirs)
+##    Add FetchContent
+include (FetchContent)
 
+##  Include modules provided in this repository
 
-########################################
-##  Set initial compilation flags
+##    Initial message
+if (PROJECT_IS_TOP_LEVEL)
+  include (initial-msg)
+endif ()
 
+##    Set initial compilation flags
 include (compile-flags)
 
-
-########################################
-##  Obtain the Git hash and version
-
+##    Obtain the Git hash
 include (git-hash)
+
+##    Obtain the version
 include (version)
 
+##    Add subdirectories onced
+include (add_subdirectory_once)
 
-########################################
 ##  Set up for Boost
-
 include (boost)
+
+##  Set up for documentation
+include (doxygen)
 
 
 ########################################
@@ -161,19 +173,17 @@ if (TARGET ${TARGET_NAME_EXEC})
   ##  Rename the executable
   set_property (TARGET qscores_exe PROPERTY OUTPUT_NAME qscores-archiver)
 
-  if (Boost_FOUND)
-    target_include_directories (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")
-    target_link_libraries (${TARGET_NAME_EXEC} ${Boost_LIBRARIES})
-  endif ()
+  target_include_directories (${TARGET_NAME_EXEC} PRIVATE "${Boost_INCLUDE_DIRS}")
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE Boost::program_options)
 
-  target_link_libraries (${TARGET_NAME_EXEC} bitbuffer)
-  target_link_libraries (${TARGET_NAME_EXEC} bitio)
-  target_link_libraries (${TARGET_NAME_EXEC} interpolative)
-  target_link_libraries (${TARGET_NAME_EXEC} huffman)
-  target_link_libraries (${TARGET_NAME_EXEC} block-statistics)
-  target_link_libraries (${TARGET_NAME_EXEC} qscores-single)
-  target_link_libraries (${TARGET_NAME_EXEC} qscores-settings)
-  target_link_libraries (${TARGET_NAME_EXEC} external-software)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE bitbuffer)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE bitio)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE interpolative)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE huffman)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE block-statistics)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE qscores-single)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE qscores-settings)
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE external-software)
 
   install (TARGETS ${TARGET_NAME_EXEC} DESTINATION bin)
 endif ()
@@ -208,21 +218,17 @@ add_subdirectory_once (${MAIN_SRC_PATH}/external-software ${CMAKE_CURRENT_BINARY
 
 
 ########################################
-##  Documentation
+##  Set various values based on libraries found
 
-include (doxygen)
+include (post-compress)
 
 
 ########################################
 ##  Show final message
 
-include (final-msg)
-
-
-########################################
-##  Set various values based on libraries found
-
-include (post-compress)
+if (PROJECT_IS_TOP_LEVEL)
+  include (final-msg)
+endif ()
 
 
 ########################################

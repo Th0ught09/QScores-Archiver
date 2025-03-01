@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -20,12 +20,12 @@
 ###########################################################################
 
 
-FIND_PACKAGE (OpenMP)
-IF (OPENMP_FOUND)
-  SET (HAVE_OPENMP 1)
-ENDIF ()
+find_package (OpenMP)
+if (OPENMP_FOUND)
+  set (HAVE_OPENMP 1)
+endif ()
 
-FIND_PACKAGE (MPI)
-IF (MPI_CXX_FOUND)
-  SET (HAVE_MPI 1)
-ENDIF ()
+find_package (MPI)
+if (MPI_CXX_FOUND)
+  set (HAVE_MPI 1)
+endif ()

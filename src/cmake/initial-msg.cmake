@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.

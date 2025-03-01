@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -41,13 +41,20 @@ add_executable (${TARGET_NAME_EXEC} "")
 ########################################
 ##  Set the C++ standard
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ##  Use target_compile_features () for macOS
-target_compile_features (${TARGET_NAME_LIB} PUBLIC cxx_std_11)
-target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_11)
+target_compile_features (${TARGET_NAME_LIB} PUBLIC cxx_std_17)
+target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_17)
+
+
+########################################
+##  Set up the software
+
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "Block Statistics" LANGUAGES CXX)
+message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
 
 
 ########################################
@@ -86,30 +93,40 @@ if (NOT DEFINED MAIN_SRC_PATH)
   list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
 endif ()
 
-##  Include externally defined modules
-include (add_subdirectory_once)
-
 
 ########################################
-##  Set up the software
+##  Include modules
 
-include (initial-msg)
+##  Include CMake provided modules
+##    Provides install variables defined by the GNU Coding Standards
+include (GNUInstallDirs)
+##    Add FetchContent
+include (FetchContent)
 
-project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "Block Statistics" LANGUAGES CXX)
-message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
+##  Include modules provided in this repository
 
+##    Initial message
+if (PROJECT_IS_TOP_LEVEL)
+  include (initial-msg)
+endif ()
 
-########################################
-##  Set initial compilation flags
-
+##    Set initial compilation flags
 include (compile-flags)
 
-
-########################################
-##  Obtain the Git hash and version
-
+##    Obtain the Git hash
 include (git-hash)
+
+##    Obtain the version
 include (version)
+
+##    Add subdirectories onced
+include (add_subdirectory_once)
+
+##  Set up for Boost
+include (boost)
+
+##  Set up for documentation
+include (doxygen)
 
 
 ########################################
@@ -174,15 +191,11 @@ add_subdirectory_once (${MAIN_SRC_PATH}/common ${CMAKE_CURRENT_BINARY_DIR}/commo
 
 
 ########################################
-##  Documentation
-
-include (doxygen)
-
-
-########################################
 ##  Show final message
 
-include (final-msg)
+if (PROJECT_IS_TOP_LEVEL)
+  include (final-msg)
+endif ()
 
 
 ########################################

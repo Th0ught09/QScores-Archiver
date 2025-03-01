@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -20,24 +20,24 @@
 ###########################################################################
 
 
-IF (OPENMP_FOUND)
-  IF (OpenMP_CXX_FLAGS)
-    SET_TARGET_PROPERTIES (${TARGET_NAME} PROPERTIES LINK_FLAGS "${OpenMP_CXX_FLAGS}")
-  ENDIF ()
-ENDIF ()
+if (OPENMP_FOUND)
+  if (OpenMP_CXX_FLAGS)
+    set_target_properties (${TARGET_NAME} PROPERTIES LINK_FLAGS "${OpenMP_CXX_FLAGS}")
+  endif ()
+endif ()
 
-IF (MPI_CXX_FOUND)
-  INCLUDE_DIRECTORIES (${MPI_CXX_INCLUDE_PATH})
+if (MPI_CXX_FOUND)
+  include_directories (${MPI_CXX_INCLUDE_PATH})
 
-  TARGET_LINK_LIBRARIES (${TARGET_NAME} ${MPI_CXX_LIBRARIES})
+  target_link_libraries (${TARGET_NAME} PRIVATE ${MPI_CXX_LIBRARIES})
 
-  IF (MPI_CXX_COMPILE_FLAGS)
-    SET_TARGET_PROPERTIES (${TARGET_NAME} PROPERTIES COMPILE_FLAGS "${MPI_CXX_COMPILE_FLAGS}")
-  ENDIF ()
+  if (MPI_CXX_COMPILE_FLAGS)
+    set_target_properties (${TARGET_NAME} PROPERTIES COMPILE_FLAGS "${MPI_CXX_COMPILE_FLAGS}")
+  endif ()
 
-  IF (MPI_CXX_LINK_FLAGS)
-    SET_TARGET_PROPERTIES (${TARGET_NAME} PROPERTIES LINK_FLAGS "${MPI_CXX_LINK_FLAGS}")
-  ENDIF ()
-ENDIF ()
+  if (MPI_CXX_LINK_FLAGS)
+    set_target_properties (${TARGET_NAME} PROPERTIES LINK_FLAGS "${MPI_CXX_LINK_FLAGS}")
+  endif ()
+endif ()
 
 

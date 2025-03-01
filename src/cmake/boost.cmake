@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -19,37 +19,70 @@
 ##  <http://www.gnu.org/licenses/>.
 ###########################################################################
 
-
-##  Suppress warning about new versions of Boost
-set (Boost_NO_WARN_NEW_VERSIONS 1)
-
-if (NOT Boost_FOUND)
-  ##  Set the root path for Boost from the environment variable
-  # set (Boost_DEBUG OFF)
-  set (BOOST_ROOT $ENV{BOOST_ROOT})
-
-  if (NOT BOOST_ROOT)
-    message (FATAL_ERROR "EE\tThe environment variable BOOST_ROOT has to be set.")
-  endif ()
-
-  set (Boost_NO_SYSTEM_PATHS ON)
-  set (Boost_USE_STATIC_LIBS   OFF)
-  set (Boost_USE_MULTITHREADED ON)
-  set (Boost_USE_STATIC_RUNTIME OFF)
-
-  ##  Disable search for boost-cmake, from Boost 1.70.0
-  ##    Helpful if there are conflicts between locally and system-installed versions
-  set (Boost_NO_BOOST_CMAKE OFF)
-
-set(BOOST_ROOT "/usr/include")  
-set(BOOST_LIBRARYDIR "/usr/lib/x86_64-linux-gnu") 
-  set (BOOST_COMPILED_LIBRARIES program_options system filesystem serialization mpi)
-  find_package (Boost 1.79.0 REQUIRED COMPONENTS ${BOOST_COMPILED_LIBRARIES})
+##  Use the new policy CMP0167 for the use of find_package (Boost)
+if (POLICY CMP0167)
+  cmake_policy (SET CMP0167 NEW)
 endif ()
 
-if (Boost_FOUND)
-  link_directories (${Boost_LIBRARY_DIRS})
-  target_include_directories (${TARGET_NAME_EXEC} PUBLIC "${Boost_INCLUDE_DIRS}")
-  target_link_libraries (${TARGET_NAME_EXEC} ${Boost_LIBRARIES})
+##  Check if this is the top level
+if (PROJECT_IS_TOP_LEVEL)
+  ##  Enable verbose and debugging messages
+  set (Boost_VERBOSE YES)
+  set (Boost_DEBUG YES)
+
+  ##  Set the minimum version and the required components
+  set (BOOST_MIN_VERSION 1.85.0)
+  set (BOOST_REQUIRED_COMPONENTS program_options filesystem headers)
+
+  ##  Locate Boost
+  find_package (Boost ${BOOST_MIN_VERSION} COMPONENTS ${BOOST_REQUIRED_COMPONENTS})
+
+  ##  If it is not found, then install and compile Boost
+  if (NOT Boost_FOUND)
+    set (CPM_USE_LOCAL_PACKAGES YES)
+
+    ##  Download CPM
+    message (STATUS "Fetching CPM.cmake from GitHub...")
+    FetchContent_Declare (
+      "cpm"
+      GIT_REPOSITORY "git@github.com:cpm-cmake/CPM.cmake.git"
+      GIT_TAG "origin/master"
+    )
+    FetchContent_MakeAvailable (cpm)
+    set (CPM_SOURCE_DIR "${cpm_SOURCE_DIR}")
+    set (CPM_BINARY_DIR "${cpm_BINARY_DIR}")
+    include (${CPM_SOURCE_DIR}/cmake/CPM.cmake)
+
+    ##  Set the components that we need and download locally
+    list (APPEND BOOST_INCLUDE_LIBRARIES ${BOOST_REQUIRED_COMPONENTS})
+
+    ###############
+    ##  There are two options to obtain Boost.  The default is to just copy from a local directory on the system.  The alternative is to clone from GitHub.
+    ##    To use the alternative, swap the comments.
+    ###############
+
+    ###############
+    ##  Fetch Boost from a local directory
+    set (FETCHCONTENT_SOURCE_DIR_BOOST /usr/local/boost/)
+
+    ##  Clone Boost-CMake with CPM; only works with Git Tag 85c04c6
+    ##    (Need to investigate further why.)
+    message (STATUS "Cloning Boost-CMake from GitHub with CPM...")
+    CPMAddPackage(
+      NAME boost_cmake
+      GIT_REPOSITORY "https://github.com/ClausKlein/boost-cmake.git"
+      GIT_TAG "85c04c6"
+      DOWNLOAD_ONLY YES
+    )
+
+    ##  Configure Boost
+    add_subdirectory (${boost_cmake_SOURCE_DIR} ${boost_cmake_BINARY_DIR})
+    ###############
+
+    ###############
+    ##  Clone from Claus Klein's GitHub repository
+    # CPMAddPackage ("gh:ClausKlein/boost-cmake#v1.87.0-rc5")
+    ###############
+  endif ()
 endif ()
 

@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -39,11 +39,11 @@
 function (Add_Subdirectory_Once SUBDIRECTORY)
   get_filename_component (FULLPATH ${SUBDIRECTORY} REALPATH)
 
-  GET_PROPERTY (_INCLUDED_DIRS GLOBAL PROPERTY ADD_SUBDIRECTORY_ONCE_INCLUDED)
-  LIST (FIND _INCLUDED_DIRS "${FULLPATH}" _USED_INDEX)
+  get_property (_INCLUDED_DIRS GLOBAL PROPERTY ADD_SUBDIRECTORY_ONCE_INCLUDED)
+  list (FIND _INCLUDED_DIRS "${FULLPATH}" _USED_INDEX)
 
   if (_USED_INDEX EQUAL -1)
-    SET_PROPERTY (GLOBAL PROPERTY ADD_SUBDIRECTORY_ONCE_INCLUDED "${_INCLUDED_DIRS}" "${FULLPATH}")
+    set_property (GLOBAL PROPERTY ADD_SUBDIRECTORY_ONCE_INCLUDED "${_INCLUDED_DIRS}" "${FULLPATH}")
     if(${ARGC} EQUAL 1)
       add_subdirectory (${SUBDIRECTORY})
     else(${ARGC} EQUAL 1)

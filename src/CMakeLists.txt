@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -32,9 +32,16 @@ cmake_policy (SET CMP0144 NEW)
 
 set (CURR_PROJECT_NAME "QScores-Archiver")
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
+
+
+########################################
+##  Set up the software
+
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores-Archiver" LANGUAGES CXX)
+message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
 
 
 ########################################
@@ -42,34 +49,62 @@ set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ##  If the MAIN_SRC_PATH has not been defined yet
 if (NOT DEFINED MAIN_SRC_PATH)
-  ##  Set the main source path to the very top
-  set (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/")
 
-  ##  Locate where the shared CMake modules are
+  ##  Set the main source path to the very top, and make it global
+  set (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" CACHE INTERNAL "Program's main directory")
+
+  ##  Location where the shared CMake modules are
   list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
 endif ()
 
-##  Include externally defined modules
-include (add_subdirectory_once)
-
 
 ########################################
-##  Set up the software
-include (initial-msg)
+##  Include modules
 
-project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "QScores-Archiver" LANGUAGES CXX)
-message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
+##  Include CMake provided modules
+##    Provides install variables defined by the GNU Coding Standards
+include (GNUInstallDirs)
+##    Add FetchContent
+include (FetchContent)
+
+##  Include modules provided in this repository
+
+##    Initial message
+if (PROJECT_IS_TOP_LEVEL)
+  include (initial-msg)
+endif ()
+
+##    Set initial compilation flags
+include (compile-flags)
+
+##    Obtain the Git hash
+include (git-hash)
+
+##    Obtain the version
+include (version)
+
+##    Add subdirectories onced
+include (add_subdirectory_once)
+
+##  Set up for Boost
+include (boost)
+
+##  Set up for documentation
+include (doxygen)
 
 
 ########################################
 ##  Add subdirectories to process
 
-add_subdirectory_once (qscores)
+add_subdirectory_once (bitio)
 
 
 ########################################
 ##  Show final message
-include (final-msg)
+
+if (PROJECT_IS_TOP_LEVEL)
+  include (final-msg)
+endif ()
 
 
 ########################################

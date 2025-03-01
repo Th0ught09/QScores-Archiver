@@ -1,5 +1,5 @@
 ###########################################################################
-##  Copyright 2011-2015, 2024 by Raymond Wan (rwan.work@gmail.com)
+##  Copyright 2011-2015, 2024-2025 by Raymond Wan (rwan.work@gmail.com)
 ##    https://github.com/rwanwork/QScores-Archiver
 ##
 ##  This file is part of QScores-Archiver.
@@ -41,13 +41,20 @@ add_executable (${TARGET_NAME_EXEC} "")
 ########################################
 ##  Set the C++ standard
 
-set (CMAKE_CXX_STANDARD 11)
+set (CMAKE_CXX_STANDARD 17)
 set (CMAKE_CXX_EXTENSIONS OFF)
 set (CMAKE_CXX_STANDARD_REQUIRED ON)
 
 ##  Use target_compile_features () for macOS
-target_compile_features (${TARGET_NAME_LIB} PUBLIC cxx_std_11)
-target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_11)
+target_compile_features (${TARGET_NAME_LIB} PUBLIC cxx_std_17)
+target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_17)
+
+
+########################################
+##  Set up the software
+
+project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "External Software" LANGUAGES CXX)
+message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
 
 
 ########################################
@@ -98,31 +105,38 @@ include (add_subdirectory_once)
 
 
 ########################################
-##  Set up the software
+##  Include modules
 
-include (initial-msg)
+##  Include CMake provided modules
+##    Provides install variables defined by the GNU Coding Standards
+include (GNUInstallDirs)
+##    Add FetchContent
+include (FetchContent)
 
-project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "External Software" LANGUAGES CXX)
-message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
+##  Include modules provided in this repository
 
+##    Initial message
+if (PROJECT_IS_TOP_LEVEL)
+  include (initial-msg)
+endif ()
 
-########################################
-##  Set initial compilation flags
-
+##    Set initial compilation flags
 include (compile-flags)
 
-
-########################################
-##  Obtain the Git hash and version
-
+##    Obtain the Git hash
 include (git-hash)
+
+##    Obtain the version
 include (version)
 
+##    Add subdirectories onced
+include (add_subdirectory_once)
 
-########################################
 ##  Set up for Boost
-
 include (boost)
+
+##  Set up for documentation
+include (doxygen)
 
 
 ########################################
@@ -164,6 +178,9 @@ if (TARGET ${TARGET_NAME_EXEC})
   ##  Rename the executable
   set_property (TARGET external-software_exe PROPERTY OUTPUT_NAME external_software)
 
+  target_include_directories (${TARGET_NAME_EXEC} PRIVATE "${Boost_INCLUDE_DIRS}")
+  target_link_libraries (${TARGET_NAME_EXEC} PRIVATE Boost::filesystem)
+
   install (TARGETS ${TARGET_NAME_EXEC} DESTINATION bin)
 endif ()
 
@@ -173,6 +190,8 @@ if (TARGET ${TARGET_NAME_LIB})
   ##  Add sources to the target
   target_sources (${TARGET_NAME_LIB} PRIVATE ${CPP_FILES})
   target_sources (${TARGET_NAME_LIB} PRIVATE ${HPP_FILES})
+
+  target_link_libraries (${TARGET_NAME_LIB} PRIVATE Boost::filesystem)
 
   install (TARGETS ${TARGET_NAME_LIB} DESTINATION lib)
 endif ()
@@ -200,15 +219,11 @@ include (post-compress)
 
 
 ########################################
-##  Documentation
-
-include (doxygen)
-
-
-########################################
 ##  Show final message
 
-include (final-msg)
+if (PROJECT_IS_TOP_LEVEL)
+  include (final-msg)
+endif ()
 
 
 ########################################
