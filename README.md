@@ -62,8 +62,8 @@ In addition to the above, the Boost Library must be both installed and compiled 
 `sudo apt install libboost-program-options-dev libboost-filesystem-dev`
 
 2.  Proceed with configuring QScores-Archiver (see the section "Configuring and Compiling" below) in one of two ways:
-  (a)  Boost is downloaded from [here](https://www.boost.org/users/download/) and unarchived, but no further configuration or compilation of Boost is done.  When configuring QScores-Archiver, it will be copied from a local directory and compiled.  This is the default and it is assumed that Boost is unarchived in the `/usr/local/boost/` directory (edit the value to the variable `FETCHCONTENT_SOURCE_DIR_BOOST` in `src/cmake/boost.cmake` to change the location).
-  (b)  Boost is cloned from GitHub and compiled.  To enable this option, edit `src/cmake/boost.cmake` and go to the section with "###############" and read carefully.  Swap the comments around.  The second option only has one command:  CPMAddPackage ()
+  1.  Boost is downloaded from [here](https://www.boost.org/users/download/) and unarchived, but no further configuration or compilation of Boost is done.  When configuring QScores-Archiver, it will be copied from a local directory and compiled.  This is the default and it is assumed that Boost is unarchived in the `/usr/local/boost/` directory (edit the value to the variable `FETCHCONTENT_SOURCE_DIR_BOOST` in `src/cmake/boost.cmake` to change the location).
+  2.  Boost is cloned from GitHub and compiled.  To enable this option, edit `src/cmake/boost.cmake` and go to the section with "###############" and read carefully.  Swap the comments around.  The second option only has one command:  CPMAddPackage ()
 
 
 ###  conda
@@ -88,7 +88,7 @@ Configuring and Compiling
 The QScores-Archiver software is written in C++ and has been compiled using versions 5.2.1 and 9.3.0 of g++. The system has been tested on a 64-bit system, but it should work on other architectures.
 
 CMake (at least version 3.5) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
-   1.  Set up the dependencies according to the previous section.  In particular, for the Boost library, we have assumed that option 2(a) is used.
+   1.  Set up the dependencies according to the previous section.  In particular, for the Boost library, we have assumed that option 2.-1. is used.
    2.  Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
    3.  Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
 
