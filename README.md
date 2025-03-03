@@ -94,11 +94,11 @@ CMake (at least version 3.5) is used to compile the software and it is recommend
 
            cmake ../src
            
-      where ".." represents the location of the top-level `CMakeLists.txt` in `~/tmp/QScores-Archiver/src/`. By default, this will set up a `Makefile` to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this (for example):
+   where ".." represents the location of the top-level `CMakeLists.txt` in `~/tmp/QScores-Archiver/src/`. By default, this will set up a `Makefile` to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this (for example):
 
            cmake .. -DCMAKE_INSTALL_PREFIX=~/tmp
            
-      replacing the installation prefix with whatever you prefer.
+   replacing the installation prefix with whatever you prefer.
    4. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should be in the build subdirectory as `qscores/qscores-archiver`.
    5. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
    6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the `cmake` line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
@@ -231,7 +231,7 @@ The following is are some of the warning or error messages that you might receiv
 
 2.
 
-    -- Fetching Boost
+    ```-- Fetching Boost
     CMake Error at /usr/share/cmake-3.30/Modules/FetchContent.cmake:2057 (message):
       Manually specified source directory is missing:
 
@@ -241,13 +241,14 @@ The following is are some of the warning or error messages that you might receiv
       ./QScores-Archiver/build/_deps/boost_cmake-src/CMakeLists.txt:38 (FetchContent_MakeAvailable)
 
     -- Configuring incomplete, errors occurred!
+    ```
 
     This is an error message that indicates that Boost could not be found in the `/usr/local/boost/` directory.  Either unarchive it there or change the location of the directory, as described above in the "Boost library" subsection.
 
 
 3.
 
-    [ 30%] Building CXX object _deps/boost_cmake-build/CMakeFiles/filesystem.dir/usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp.o
+    ```[ 30%] Building CXX object _deps/boost_cmake-build/CMakeFiles/filesystem.dir/usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp.o
     /usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp: In function ‘void boost::filesystem::detail::last_write_time(const boost::filesystem::path&, time_t, boost::system::error_code*)’:
     /usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp:3867:7: error: ‘::utimbuf’ has not been declared
      3867 |     ::utimbuf buf;
@@ -268,6 +269,7 @@ The following is are some of the warning or error messages that you might receiv
     make[2]: *** [_deps/boost_cmake-build/CMakeFiles/filesystem.dir/build.make:118: _deps/boost_cmake-build/CMakeFiles/filesystem.dir/usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp.o] Error 1
     make[1]: *** [CMakeFiles/Makefile2:164: _deps/boost_cmake-build/CMakeFiles/filesystem.dir/all] Error 2
     make: *** [Makefile:166: all] Error 2
+    ```
 
     This compilation error of Boost occurred for Boost version 1.80.0.  The cause of this error is unknown since earlier versions of Boost was previously fine.  Download the latest version of Boost, or at least version 1.87.0, which has been tested recently.
 
