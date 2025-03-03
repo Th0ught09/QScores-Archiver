@@ -57,23 +57,30 @@ On a Debian/Ubuntu-based system, the package manager `apt` can be used as follow
 
 In addition to the above, the Boost Library must be both installed and compiled to make use of the program_options, system, and filesystem libraries.  There are two options available.
 
-The first is to pre-install Boost before compiling this program.  On a Debian/Ubuntu-based system, the package manager `apt` can be used as follows:
+1.  Pre-install Boost before compiling this program.  On a Debian/Ubuntu-based system, the package manager `apt` can be used as follows:
 
 `sudo apt install libboost-program-options-dev libboost-filesystem-dev`
 
-The second option is to proceed with configuring QScores-Archiver (see the section "Configuring and Compiling" below) in one of two ways:
-  1.  Boost will be copied from a local directory and compiled within the `build/` directory.
-  2.  Boost is cloned from GitHub and compiled.  To enable this option, edit `src/cmake/boost.cmake` and go to the section with "###############" and read carefully.  Swap the comments around.  The second option only has one command:  CPMAddPackage ()
+2.  Proceed with configuring QScores-Archiver (see the section "Configuring and Compiling" below) in one of two ways:
+  (a)  Boost is downloaded from [here](https://www.boost.org/users/download/) and unarchived, but no further configuration or compilation of Boost is done.  When configuring QScores-Archiver, it will be copied from a local directory and compiled.  This is the default and it is assumed that Boost is unarchived in the `/usr/local/boost/` directory (edit the value to the variable `FETCHCONTENT_SOURCE_DIR_BOOST` in `src/cmake/boost.cmake` to change the location).
+  (b)  Boost is cloned from GitHub and compiled.  To enable this option, edit `src/cmake/boost.cmake` and go to the section with "###############" and read carefully.  Swap the comments around.  The second option only has one command:  CPMAddPackage ()
 
 
 ###  conda
 
-A [conda](https://docs.conda.io/en/latest/) environment can be created to include some of the above dependencies.  However, Boost (the most important dependency) is excluded at the moment.
+A [conda](https://docs.conda.io/en/latest/) environment can be created to include some of the above dependencies.
 
 To create the environment, type:
 
     `conda env create -f environment.yml`
-    
+
+
+###  Docker
+
+A `Dockerfile` has been provided to build a container with all the dependencies installed.  To build the container run:
+
+    docker build -t <name> .
+
 
 Configuring and Compiling
 -------------------------
@@ -81,6 +88,7 @@ Configuring and Compiling
 The QScores-Archiver software is written in C++ and has been compiled using versions 5.2.1 and 9.3.0 of g++. The system has been tested on a 64-bit system, but it should work on other architectures.
 
 CMake (at least version 3.5) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
+   1.  Set up the dependencies according to the previous section.  In particular, for the Boost library, we have assumed that option 2(a) is used.
    1. Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
    2. Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
 
@@ -98,11 +106,6 @@ CMake (at least version 3.5) is used to compile the software and it is recommend
 The dependencies between the various modules is depicted in the figure below (generated using `cmake` with the `--graphviz` option):
 
 ![Dependencies](./dependencies.svg)
-
-###  Docker
-A `Dockerfile` has been provided to build a container with all the dependencies installed.  To build the container run:
-
-    docker build -t <name> .
 
 
 Software Documentation
@@ -205,6 +208,68 @@ Also, QScores-Archiver does not make use of standard input and output. To be hon
 
     [1] N. J. Larsson and A. Moffat. Offline Dictionary-Based Compression. In Proc. IEEE, 88(11), 1722-1732, November 2000. 
     [2] See also [Re-Store](https://www.rwanwork.info/en/restore.html).
+
+
+Installation error messages
+---------------------------
+
+The following is are some of the warning or error messages that you might receive during installation of QScores-Archiver.
+
+1.
+    ```-- Fetching CPM.cmake from GitHub...
+    CMake Warning at ./QScores-Archiver/build/_deps/cpm-src/cmake/CPM.cmake:76 (message):
+      CPM: Your project is using an unstable development version of CPM.cmake.
+      Please update to a recent release if possible.  See
+      https://github.com/cpm-cmake/CPM.cmake for details.
+    Call Stack (most recent call first):
+      cmake/boost.cmake:54 (include)
+      CMakeLists.txt:90 (include)
+    ```
+
+    This is just a warning message during configuration and can be ignored.
+
+
+2.
+
+    -- Fetching Boost
+    CMake Error at /usr/share/cmake-3.30/Modules/FetchContent.cmake:2057 (message):
+      Manually specified source directory is missing:
+
+        FETCHCONTENT_SOURCE_DIR_BOOST --> /usr/local/boost/
+    Call Stack (most recent call first):
+      /usr/share/cmake-3.30/Modules/FetchContent.cmake:2384 (__FetchContent_Populate)
+      ./QScores-Archiver/build/_deps/boost_cmake-src/CMakeLists.txt:38 (FetchContent_MakeAvailable)
+
+    -- Configuring incomplete, errors occurred!
+
+    This is an error message that indicates that Boost could not be found in the `/usr/local/boost/` directory.  Either unarchive it there or change the location of the directory, as described above in the "Boost library" subsection.
+
+
+3.
+
+    [ 30%] Building CXX object _deps/boost_cmake-build/CMakeFiles/filesystem.dir/usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp.o
+    /usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp: In function ‘void boost::filesystem::detail::last_write_time(const boost::filesystem::path&, time_t, boost::system::error_code*)’:
+    /usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp:3867:7: error: ‘::utimbuf’ has not been declared
+     3867 |     ::utimbuf buf;
+          |       ^~~~~~~
+    /usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp:3868:5: error: ‘buf’ was not declared in this scope
+     3868 |     buf.actime = st.st_atime; // utime() updates access time too :-(
+          |     ^~~
+    In file included from /usr/local/boost_1_80_0/boost/config.hpp:39,
+                     from /usr/local/boost_1_80_0/boost/filesystem/config.hpp:19,
+                     from /usr/local/boost_1_80_0/libs/filesystem/src/platform_config.hpp:81,
+                     from /usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp:14:
+    /usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp:3870:26: error: ‘::utime’ has not been declared; did you mean ‘time’?
+     3870 |     if (BOOST_UNLIKELY(::utime(p.c_str(), &buf) < 0))
+          |                          ^~~~~
+    /usr/local/boost_1_80_0/boost/config/compiler/gcc.hpp:96:44: note: in definition of macro ‘BOOST_UNLIKELY’
+       96 | #define BOOST_UNLIKELY(x) __builtin_expect(x, 0)
+          |                                            ^
+    make[2]: *** [_deps/boost_cmake-build/CMakeFiles/filesystem.dir/build.make:118: _deps/boost_cmake-build/CMakeFiles/filesystem.dir/usr/local/boost_1_80_0/libs/filesystem/src/operations.cpp.o] Error 1
+    make[1]: *** [CMakeFiles/Makefile2:164: _deps/boost_cmake-build/CMakeFiles/filesystem.dir/all] Error 2
+    make: *** [Makefile:166: all] Error 2
+
+    This compilation error of Boost occurred for Boost version 1.80.0.  The cause of this error is unknown since earlier versions of Boost was previously fine.  Download the latest version of Boost, or at least version 1.87.0, which has been tested recently.
 
 
 Acknowledgements
