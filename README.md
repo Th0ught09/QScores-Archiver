@@ -62,8 +62,8 @@ In addition to the above, the Boost Library must be both installed and compiled 
 `sudo apt install libboost-program-options-dev libboost-filesystem-dev`
 
 2.  Proceed with configuring QScores-Archiver (see the section "Configuring and Compiling" below) in one of two ways:
-  1.  Boost is downloaded from [here](https://www.boost.org/users/download/) and unarchived, but no further configuration or compilation of Boost is done.  When configuring QScores-Archiver, it will be copied from a local directory and compiled.  This is the default and it is assumed that Boost is unarchived in the `/usr/local/boost/` directory (edit the value to the variable `FETCHCONTENT_SOURCE_DIR_BOOST` in `src/cmake/boost.cmake` to change the location).
-  2.  Boost is cloned from GitHub and compiled.  To enable this option, edit `src/cmake/boost.cmake` and go to the section with "###############" and read carefully.  Swap the comments around.  The second option only has one command:  CPMAddPackage ()
+    1.  Boost is downloaded from [here](https://www.boost.org/users/download/) and unarchived, but no further configuration or compilation of Boost is done.  When configuring QScores-Archiver, it will be copied from a local directory and compiled.  This is the default and it is assumed that Boost is unarchived in the `/usr/local/boost/` directory (edit the value to the variable `FETCHCONTENT_SOURCE_DIR_BOOST` in `src/cmake/boost.cmake` to change the location).
+    2.  Boost is cloned from GitHub and compiled.  To enable this option, edit `src/cmake/boost.cmake` and go to the section with "###############" and read carefully.  Swap the comments around.  The second option only has one command:  CPMAddPackage ()
 
 
 ###  conda
