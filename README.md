@@ -88,7 +88,7 @@ Configuring and Compiling
 The QScores-Archiver software is written in C++ and has been compiled using versions 5.2.1 and 9.3.0 of g++. The system has been tested on a 64-bit system, but it should work on other architectures.
 
 CMake (at least version 3.5) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
-   1.  Set up the dependencies according to the previous section.  In particular, for the Boost library, we have assumed that option 2.-1. is used.
+   1.  Set up the dependencies according to the previous section.  In particular, for the Boost library, we have assumed that option 2i. is used.
    2.  Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
    3.  Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
 
