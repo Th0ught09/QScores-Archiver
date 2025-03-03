@@ -39,18 +39,6 @@ add_executable (${TARGET_NAME_EXEC} "")
 
 
 ########################################
-##  Set the C++ standard
-
-set (CMAKE_CXX_STANDARD 17)
-set (CMAKE_CXX_EXTENSIONS OFF)
-set (CMAKE_CXX_STANDARD_REQUIRED ON)
-
-##  Use target_compile_features () for macOS
-target_compile_features (${TARGET_NAME_LIB} PRIVATE cxx_std_17)
-target_compile_features (${TARGET_NAME_EXEC} PRIVATE cxx_std_17)
-
-
-########################################
 ##  Set up the software
 
 project (${CURR_PROJECT_NAME} VERSION 1.0 DESCRIPTION "BitIO" LANGUAGES CXX)

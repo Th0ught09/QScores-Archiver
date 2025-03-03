@@ -20,6 +20,26 @@
 ###########################################################################
 
 
+########################################
+##  Set the C++ standard
+
+set (CMAKE_CXX_STANDARD 20)
+set (CMAKE_CXX_EXTENSIONS OFF)
+set (CMAKE_CXX_STANDARD_REQUIRED ON)
+
+##  Use target_compile_features () for macOS
+if (TARGET ${TARGET_NAME_LIB})
+  target_compile_features (${TARGET_NAME_LIB} PUBLIC cxx_std_20)
+endif ()
+
+if (TARGET ${TARGET_NAME_EXEC})
+  target_compile_features (${TARGET_NAME_EXEC} PUBLIC cxx_std_20)
+endif ()
+
+
+########################################
+##  Additional flags
+
 ##  Testing compilation flags, some of which are suggested by the Valgrind 3.3 book
 ##  set (MY_CXX_FLAGS "-pedantic -Wno-long-long -g -fno-inline -O0 -Wall")
 
