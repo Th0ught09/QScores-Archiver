@@ -89,19 +89,19 @@ The QScores-Archiver software is written in C++ and has been compiled using vers
 
 CMake (at least version 3.5) is used to compile the software and it is recommended that an "out-of-source" build is performed so as not to clutter the original source directories. We give some brief instructions below on how to do this:
    1.  Set up the dependencies according to the previous section.  In particular, for the Boost library, we have assumed that option 2(a) is used.
-   1. Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
-   2. Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
+   2.  Create a directory for the repository [i.e., `~/tmp/`] and clone it into there.
+   3.  Enter the `~/tmp/QScores-Archiver/` directory (or whichever name you chose) and create a `build/` directory.  Then, enter it.  (Actually, `build/` can be anywhere, including an entirely separate directory tree.  You can delete it after compilation or you may want to keep it if you plan to re-compile the source code.). Then run,
 
            cmake ../src
            
-      where ".." represents the location of the top-level `CMakeLists.txt` in `~/tmp/QScores-Archiver/src/`. By default, this will set up a Makefile to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this (for example):
+      where ".." represents the location of the top-level `CMakeLists.txt` in `~/tmp/QScores-Archiver/src/`. By default, this will set up a `Makefile` to install the program into `/usr/local/`, which would require system administrator access. To use another directory, type this (for example):
 
            cmake .. -DCMAKE_INSTALL_PREFIX=~/tmp
            
       replacing the installation prefix with whatever you prefer.
-   3. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should be in the build subdirectory as `qscores/qscores-archiver`.
-   4. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
-   5. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the `cmake` line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
+   4. Type `make` to compile the C++ source code of QScores-Archiver. If this succeeds, then the executable should be in the build subdirectory as `qscores/qscores-archiver`.
+   5. Type `make test` to run through a series of tests. There are 62 tests in total and each one should say **Passed**.
+   6. Finally, type `make install` to install the software. This copies the important files from the archive to the installation prefix specified in the `cmake` line above (see "Files_and_Directories" for information about the structure) . The `~/tmp/QScores-Archiver/` directory, including the `build/` directory, can now be deleted, unless you are interested in viewing the source code.
 
 The dependencies between the various modules is depicted in the figure below (generated using `cmake` with the `--graphviz` option):
 
