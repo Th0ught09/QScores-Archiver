@@ -35,5 +35,5 @@ if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
   message ("  cmake -DCMAKE_INSTALL_PREFIX=~/tmp/qscores ${CMAKE_CURRENT_SOURCE_DIR}/CMakeLists.txt\n")
   message ("See the man pages for cmake for more information!")
   message ("############################################################")
-endif ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
+endif ()
 

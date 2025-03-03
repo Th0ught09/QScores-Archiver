@@ -28,5 +28,5 @@ if ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
   message ("  where <top-path> = ${CMAKE_INSTALL_PREFIX}\n")
   message ("Test the program(s) by typing 'make test'.")
   message ("############################################################")
-endif ("${CMAKE_SOURCE_DIR}" STREQUAL "${CMAKE_CURRENT_SOURCE_DIR}")
+endif ()
 
