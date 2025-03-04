@@ -55,7 +55,6 @@ if (NOT DEFINED MAIN_SRC_PATH)
   list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
 endif ()
 
-message (STATUS "${CMAKE_MODULE_PATH}")
 
 ########################################
 ##  Include modules
