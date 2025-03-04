@@ -28,7 +28,7 @@ cmake_policy (SET CMP0144 NEW)
 
 
 ########################################
-##  Define the project name and C++ standard
+##  Define the project name
 
 set (CURR_PROJECT_NAME "QScores-Archiver")
 
@@ -92,7 +92,7 @@ include (doxygen)
 ########################################
 ##  Add subdirectories to process
 
-add_subdirectory_once (bitio)
+add_subdirectory_once (qscores)
 
 
 ########################################
