@@ -21,7 +21,9 @@
 
 
 ##  Set the minimum required CMake version
-cmake_minimum_required (VERSION 3.5 FATAL_ERROR)
+##    3.13 required to support target_sources ()
+##    3.30 required for the latest behaviour with BOOST (CMP0167)
+cmake_minimum_required (VERSION 3.30 FATAL_ERROR)
 
 ##  Set policy CMP0144 to "new" (Run "cmake --help-policy CMP0144" for details.)
 cmake_policy (SET CMP0144 NEW)
@@ -47,12 +49,13 @@ message (STATUS "Setting up ${CURR_PROJECT_NAME}...")
 if (NOT DEFINED MAIN_SRC_PATH)
 
   ##  Set the main source path to the very top, and make it global
-  set (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/" CACHE INTERNAL "Program's main directory")
+  set (MAIN_SRC_PATH "${CMAKE_CURRENT_SOURCE_DIR}/")
 
   ##  Location where the shared CMake modules are
   list (APPEND CMAKE_MODULE_PATH "${MAIN_SRC_PATH}/cmake")
 endif ()
 
+message (STATUS "${CMAKE_MODULE_PATH}")
 
 ########################################
 ##  Include modules
